@@ -1,0 +1,69 @@
+# ==========================================
+# 1. Dependencies & Package Managers
+# ==========================================
+node_modules/
+.pnp
+.pnp.js
+
+# ==========================================
+# 2. Production & Build Outputs
+# ==========================================
+dist/
+dist-ssr/
+build/
+*.local
+
+# ==========================================
+# 3. Environment Variables & Secrets
+# ==========================================
+.env
+.env.*
+!.env.example
+
+# ==========================================
+# 4. Database & User Data
+# ==========================================
+# دیتابیس زنده حاوی اطلاعات کاربران، مشتریان و رمزها
+server/data/db.json
+server/data/*.bak
+server/data/*.backup
+*.sqlite
+*.sqlite3
+*.db
+!server/data/db.example.json
+
+# ==========================================
+# 5. Temporary, Logs & Scratch Files
+# ==========================================
+temp_frames/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.tmp
+*.temp
+
+# ==========================================
+# 6. Uploads Policy
+# ==========================================
+# نادیده گرفتن آپلودهای داینامیک کاربران به جز نگه‌دارنده و اس‌های مورد نیاز پورتفولیو
+public/uploads/*
+!public/uploads/.gitkeep
+!public/uploads/laneige_*.jpg
+
+# ==========================================
+# 7. Operating System & IDE Files
+# ==========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.code-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
