@@ -14,7 +14,8 @@ import {
   Award,
   Volume2,
   VolumeX,
-  RotateCcw
+  RotateCcw,
+  ChevronDown
 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
@@ -30,6 +31,7 @@ export const Home: React.FC = () => {
   const [activeChapter, setActiveChapter] = useState(0);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [processVisible, setProcessVisible] = useState(false);
+  const [activeStep, setActiveStep] = useState<number>(0);
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const processRef = useRef<HTMLElement>(null);
@@ -728,7 +730,7 @@ export const Home: React.FC = () => {
 
       {/* ---------------- 5. PROCESS PREVIEW ---------------- */}
       <section id="process" ref={processRef} className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/80">
-        <div className={`flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6 transition-all duration-[1200ms] ease-out ${
+        <div className={`flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-14 gap-4 sm:gap-6 transition-all duration-[1200ms] ease-out ${
           processVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <div className="space-y-3">
@@ -746,8 +748,8 @@ export const Home: React.FC = () => {
           </Button>
         </div>
 
-        {/* Process Steps: Horizontal Timeline on Mobile, 5-Col Grid on Desktop */}
-        <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4 overflow-x-auto sm:overflow-visible snap-x snap-mandatory pb-4 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 no-scrollbar">
+        {/* Desktop: 5-Col Grid (Unchanged & Expansive) */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4">
           {[
             { step: '۰۱', title: 'کشف و دریافت بریف', desc: 'شناخت دقیق ابعاد بیزنس، مزیت‌های رقابتی و تحلیل مخاطبان هدف برند شما.' },
             { step: '۰۲', title: 'ایده‌پردازی و سناریو', desc: 'نگارش سناریوهای خلاقانه و استوری‌بورد تصویری برای اعتبارسنجی اولیه.' },
@@ -757,7 +759,7 @@ export const Home: React.FC = () => {
           ].map((item, idx) => (
             <div
               key={idx}
-              className={`w-[74vw] xs:w-[260px] sm:w-auto shrink-0 sm:shrink snap-center group p-6 rounded-2xl bg-studio-900/50 border border-slate-800/80 relative flex flex-col justify-between hover:border-indigo-500/40 hover:bg-studio-900/80 hover:-translate-y-1.5 transition-all duration-[1400ms] shadow-md hover:shadow-xl hover:shadow-indigo-950/40 transform ${
+              className={`group p-6 rounded-2xl bg-studio-900/50 border border-slate-800/80 relative flex flex-col justify-between hover:border-indigo-500/40 hover:bg-studio-900/80 hover:-translate-y-1.5 transition-all duration-[1400ms] shadow-md hover:shadow-xl hover:shadow-indigo-950/40 transform ${
                 processVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-10'
@@ -785,10 +787,72 @@ export const Home: React.FC = () => {
           ))}
         </div>
 
-        {/* Mobile Swipe Hint */}
-        <div className="flex sm:hidden items-center justify-center pt-2 text-[11px] text-slate-400 gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-          <span>مسیر گام‌به‌گام از ایده تا اکران (ورق بزنید)</span>
+        {/* Mobile: Interactive Luxury Editorial Stepper (Short, High-Touch, Zero Swipe Fatigue) */}
+        <div className="block sm:hidden space-y-2">
+          {[
+            { step: '۰۱', title: 'کشف و دریافت بریف', desc: 'شناخت دقیق ابعاد بیزنس، مزیت‌های رقابتی و تحلیل مخاطبان هدف برند شما.' },
+            { step: '۰۲', title: 'ایده‌پردازی و سناریو', desc: 'نگارش سناریوهای خلاقانه و استوری‌بورد تصویری برای اعتبارسنجی اولیه.' },
+            { step: '۰۳', title: 'تولید و تصویربرداری', desc: 'اجرای حرفه‌ای صحنه‌ها، انیمیشن‌های سه‌بعدی و نماهای تبلیغاتی با بالاترین کیفیت.' },
+            { step: '۰۴', title: 'تدوین و صداگذاری', desc: 'اصلاح رنگ سینمایی، مهندسی صدای فراگیر و بازبینی سخت‌گیرانه کارگردان هنری.' },
+            { step: '۰۵', title: 'تحویل و اکران کمپین', desc: 'ارائه بسته‌های خروجی با ابعاد متناسب پلتفرم‌های دیجیتال و نظارت بر اثرگذاری.' },
+          ].map((item, idx) => {
+            const isOpen = activeStep === idx;
+            return (
+              <div
+                key={idx}
+                onClick={() => setActiveStep(isOpen ? -1 : idx)}
+                className={`rounded-2xl transition-all duration-300 border overflow-hidden cursor-pointer select-none ${
+                  isOpen
+                    ? 'bg-studio-900/90 border-indigo-500/50 shadow-lg shadow-indigo-950/40'
+                    : 'bg-studio-900/40 border-slate-800/80 active:bg-studio-900/70'
+                }`}
+              >
+                {/* Header Row */}
+                <div className="flex items-center justify-between p-3.5">
+                  <div className="flex items-center gap-3">
+                    <span
+                      className={`font-mono text-base font-black transition-colors ${
+                        isOpen ? 'text-indigo-400' : 'text-slate-500'
+                      }`}
+                    >
+                      {item.step}
+                    </span>
+                    <span
+                      className={`text-sm font-bold font-vazir transition-colors ${
+                        isOpen ? 'text-white' : 'text-slate-300'
+                      }`}
+                    >
+                      {item.title}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {isOpen && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                    )}
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform duration-300 ${
+                        isOpen ? 'rotate-180 text-indigo-400' : 'text-slate-500'
+                      }`}
+                    />
+                  </div>
+                </div>
+
+                {/* Animated Description */}
+                <div
+                  className={`transition-all duration-300 ease-in-out px-4 overflow-hidden ${
+                    isOpen ? 'max-h-24 pb-3.5 opacity-100' : 'max-h-0 pb-0 opacity-0'
+                  }`}
+                >
+                  <div className="pt-2 border-t border-white/[0.06]">
+                    <p className="text-xs text-slate-300 leading-relaxed font-light">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 

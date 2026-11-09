@@ -105,3 +105,4 @@ try {
   console.error('Test error:', e);
   chromeProc.kill();
 }
+
