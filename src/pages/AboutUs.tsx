@@ -45,7 +45,7 @@ export const AboutUs: React.FC = () => {
       </div>
 
       {/* Manifesto Box */}
-      <div id="about-manifesto" className="glass-card rounded-3xl p-8 sm:p-14 border border-slate-800 relative overflow-hidden">
+      <div id="about-manifesto" className="glass-card rounded-2xl sm:rounded-3xl p-6 sm:p-14 border border-slate-800 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="relative z-10 max-w-3xl mx-auto space-y-6 text-center sm:text-right">

@@ -5,7 +5,9 @@ import { AuthProvider } from './context/AuthContext';
 // Layouts
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
+import { MobileBottomDock } from './components/layout/MobileBottomDock';
 import { FloatingScrollGuide } from './components/common/FloatingScrollGuide';
+import { ScrollToTop } from './components/common/ScrollToTop';
 import { AdminLayout } from './pages/admin/AdminLayout';
 
 // Public Pages
@@ -34,6 +36,7 @@ const PublicLayout: React.FC = () => {
       </main>
       <Footer />
       <FloatingScrollGuide />
+      <MobileBottomDock />
     </div>
   );
 };
@@ -42,6 +45,7 @@ export const App: React.FC = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<PublicLayout />}>

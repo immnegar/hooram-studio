@@ -3,5 +3,5 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/*
 
-Sitemap: https://hooram.studio/sitemap.xml
+Sitemap: https://hooramstudio.ir/sitemap.xml
 

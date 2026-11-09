@@ -152,7 +152,7 @@ export const Contact: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         {/* Contact Form Column (7 Cols) */}
         <div id="contact-form" className="lg:col-span-7">
-          <div className="glass-card rounded-3xl p-8 sm:p-10 border border-slate-800 relative">
+          <div className="glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-10 border border-slate-800 relative">
             {successResponse ? (
               <div className="text-center py-12 space-y-6 animate-fadeIn">
                 <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center">

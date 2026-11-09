@@ -1,18 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Film, Phone, Mail, MapPin, Clock, ArrowUpLeft } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Film, Phone, Mail, Clock, ArrowUpLeft } from 'lucide-react';
 import { InstagramIcon, LinkedinIcon, TelegramIcon } from '../ui/SocialIcons';
 import { api } from '../../services/api';
 import { StudioSettings } from '../../types';
 
 export const Footer: React.FC = () => {
   const [settings, setSettings] = useState<StudioSettings | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
     api.getSettings().then(setSettings).catch(console.error);
   }, []);
+
+  const handleNav = (targetPath: string, hashId?: string) => {
+    if (hashId) {
+      if (location.pathname === targetPath) {
+        const el = document.getElementById(hashId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    } else {
+      if (location.pathname === targetPath) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
-    <footer className="bg-studio-900 border-t border-slate-800/80 pt-16 pb-12 text-slate-400 relative overflow-hidden">
+    <footer className="bg-studio-900 border-t border-slate-800/80 pt-16 pb-28 md:pb-14 text-slate-400 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-indigo-600/5 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-cyan-600/5 rounded-full blur-3xl pointer-events-none"></div>
@@ -54,12 +71,15 @@ export const Footer: React.FC = () => {
                     <InstagramIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   </a>
                 ) : (
-                  <div
-                    title="اینستاگرام رسمی (به‌زودی)"
-                    className="w-9 h-9 rounded-xl bg-studio-950/50 border border-slate-800/40 text-slate-600 flex items-center justify-center cursor-not-allowed opacity-50"
+                  <a
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="اینستاگرام هورام استودیو"
+                    className="w-9 h-9 rounded-xl bg-studio-950 border border-slate-800 hover:border-pink-500/50 hover:bg-pink-950/20 text-slate-400 hover:text-pink-400 flex items-center justify-center transition-all shadow-sm group"
                   >
-                    <InstagramIcon className="w-4 h-4" />
-                  </div>
+                    <InstagramIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  </a>
                 )}
 
                 {settings?.linkedin ? (
@@ -73,12 +93,15 @@ export const Footer: React.FC = () => {
                     <LinkedinIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   </a>
                 ) : (
-                  <div
-                    title="لینکدین رسمی (به‌زودی)"
-                    className="w-9 h-9 rounded-xl bg-studio-950/50 border border-slate-800/40 text-slate-600 flex items-center justify-center cursor-not-allowed opacity-50"
+                  <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="صفحه لینکدین هورام استودیو"
+                    className="w-9 h-9 rounded-xl bg-studio-950 border border-slate-800 hover:border-blue-500/50 hover:bg-blue-950/20 text-slate-400 hover:text-blue-400 flex items-center justify-center transition-all shadow-sm group"
                   >
-                    <LinkedinIcon className="w-4 h-4" />
-                  </div>
+                    <LinkedinIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  </a>
                 )}
 
                 {settings?.telegram ? (
@@ -92,47 +115,70 @@ export const Footer: React.FC = () => {
                     <TelegramIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   </a>
                 ) : (
-                  <div
-                    title="تلگرام رسمی (به‌زودی)"
-                    className="w-9 h-9 rounded-xl bg-studio-950/50 border border-slate-800/40 text-slate-600 flex items-center justify-center cursor-not-allowed opacity-50"
+                  <a
+                    href="https://t.me"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="کانال تلگرام هورام استودیو"
+                    className="w-9 h-9 rounded-xl bg-studio-950 border border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-950/20 text-slate-400 hover:text-cyan-400 flex items-center justify-center transition-all shadow-sm group"
                   >
-                    <TelegramIcon className="w-4 h-4" />
-                  </div>
+                    <TelegramIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  </a>
                 )}
               </div>
             </div>
           </div>
 
-          {/* Col 3: Services */}
+          {/* Col 3: Two Main Service Pillars (دو بخش اصلی خدمات) */}
           <div className="space-y-3">
             <h4 className="text-sm font-semibold text-white tracking-wider">دو بخش اصلی خدمات</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/services" className="hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                <Link
+                  to="/services#service-video"
+                  onClick={() => handleNav('/services', 'service-video')}
+                  className="hover:text-indigo-400 transition-colors flex items-center gap-1.5 py-1"
+                >
                   <ArrowUpLeft className="w-3.5 h-3.5 text-indigo-500" />
                   تولید فیلم و ویدئوی تبلیغاتی
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                <Link
+                  to="/services#service-video"
+                  onClick={() => handleNav('/services', 'service-video')}
+                  className="hover:text-indigo-400 transition-colors flex items-center gap-1.5 py-1"
+                >
                   <ArrowUpLeft className="w-3.5 h-3.5 text-indigo-500" />
                   فیلم‌های معرفی محصول و تجاری
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                <Link
+                  to="/services#service-web"
+                  onClick={() => handleNav('/services', 'service-web')}
+                  className="hover:text-indigo-400 transition-colors flex items-center gap-1.5 py-1"
+                >
                   <ArrowUpLeft className="w-3.5 h-3.5 text-indigo-500" />
                   طراحی و توسعه وب‌سایت‌های اختصاصی
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                <Link
+                  to="/services#service-web"
+                  onClick={() => handleNav('/services', 'service-web')}
+                  className="hover:text-indigo-400 transition-colors flex items-center gap-1.5 py-1"
+                >
                   <ArrowUpLeft className="w-3.5 h-3.5 text-indigo-500" />
                   طراحی لندینگ‌پیج و فروشگاه آنلاین
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                <Link
+                  to="/services#service-concept"
+                  onClick={() => handleNav('/services', 'service-concept')}
+                  className="hover:text-indigo-400 transition-colors flex items-center gap-1.5 py-1"
+                >
                   <ArrowUpLeft className="w-3.5 h-3.5 text-indigo-500" />
                   ایده‌پردازی کمپین و استوری‌بورد
                 </Link>
@@ -140,24 +186,54 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 4: Quick Links */}
+          {/* Col 4: Quick Links (دسترسی سریع) */}
           <div className="space-y-3">
             <h4 className="text-sm font-semibold text-white tracking-wider">دسترسی سریع</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/portfolio" className="hover:text-indigo-400 transition-colors">آرشیو پروژه‌ها و شو‌ریل</Link>
+                <Link
+                  to="/portfolio"
+                  onClick={() => handleNav('/portfolio')}
+                  className="hover:text-indigo-400 transition-colors block py-1"
+                >
+                  آرشیو پروژه‌ها و شو‌ریل
+                </Link>
               </li>
               <li>
-                <Link to="/process" className="hover:text-indigo-400 transition-colors">فرآیند ۵ مرحله‌ای همکاری</Link>
+                <Link
+                  to="/process"
+                  onClick={() => handleNav('/process')}
+                  className="hover:text-indigo-400 transition-colors block py-1"
+                >
+                  فرآیند ۵ مرحله‌ای همکاری
+                </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-indigo-400 transition-colors">درباره استودیو تبلیغاتی هورام</Link>
+                <Link
+                  to="/about"
+                  onClick={() => handleNav('/about')}
+                  className="hover:text-indigo-400 transition-colors block py-1"
+                >
+                  درباره استودیو تبلیغاتی هورام
+                </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-indigo-400 transition-colors">استعلام آنلاین هزینه و مشاوره</Link>
+                <Link
+                  to="/contact"
+                  onClick={() => handleNav('/contact')}
+                  className="hover:text-indigo-400 transition-colors block py-1"
+                >
+                  استعلام آنلاین هزینه و مشاوره
+                </Link>
               </li>
               <li>
-                <Link to="/admin" className="hover:text-indigo-400 transition-colors">پنل مدیریت استودیو</Link>
+                <Link
+                  to="/admin"
+                  onClick={() => handleNav('/admin')}
+                  className="hover:text-indigo-400 transition-colors block py-1"
+                >
+                  پنل مدیریت استودیو
+                </Link>
               </li>
             </ul>
           </div>

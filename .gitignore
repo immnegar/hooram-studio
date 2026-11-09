@@ -12,6 +12,7 @@ dist/
 dist-ssr/
 build/
 *.local
+dist.zip
 
 # ==========================================
 # 3. Environment Variables & Secrets
@@ -66,4 +67,16 @@ desktop.ini
 *.njsproj
 *.sln
 *.sw?
+
+# ==========================================
+# 8. Local Backups & Staging Archives
+# ==========================================
+backups/
+*.bak
+*.backup
+*.enc
+*.gz
+*.tar
+.chrome-*/
+
 
