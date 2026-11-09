@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Film, Menu, X, ArrowUpLeft, Shield, Phone } from 'lucide-react';
+import { Film, Menu, X, ArrowUpLeft, Phone } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { InstagramIcon, LinkedinIcon, TelegramIcon } from '../ui/SocialIcons';
 import { api } from '../../services/api';
@@ -138,14 +138,6 @@ export const Navbar: React.FC = () => {
 
             {/* Desktop Actions (Preserved) */}
             <div className="hidden sm:flex items-center gap-3">
-              <Link
-                to="/admin"
-                title="ورود به پنل مدیریت استودیو"
-                className="p-2.5 rounded-xl text-slate-400 hover:text-indigo-400 hover:bg-slate-800/60 transition-colors border border-transparent hover:border-slate-700/60"
-              >
-                <Shield className="w-4 h-4" />
-              </Link>
-
               <Button
                 to="/contact"
                 variant="primary"
@@ -159,14 +151,6 @@ export const Navbar: React.FC = () => {
 
             {/* Mobile Header Controls */}
             <div className="flex items-center gap-2 lg:hidden">
-              <Link
-                to="/admin"
-                className="p-2 rounded-xl text-slate-400 hover:text-white active:bg-slate-800/60"
-                title="پنل مدیریت"
-                aria-label="پنل مدیریت"
-              >
-                <Shield className="w-4 h-4" />
-              </Link>
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2.5 rounded-xl text-slate-200 hover:text-white bg-white/5 active:bg-white/10 border border-white/10 focus:outline-none transition-colors"

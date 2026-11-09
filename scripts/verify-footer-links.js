@@ -149,3 +149,4 @@ try {
   console.error('Footer audit error:', err);
   chromeProc.kill();
 }
+

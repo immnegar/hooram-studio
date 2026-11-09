@@ -226,15 +226,6 @@ export const Footer: React.FC = () => {
                   استعلام آنلاین هزینه و مشاوره
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/admin"
-                  onClick={() => handleNav('/admin')}
-                  className="hover:text-indigo-400 transition-colors block py-1"
-                >
-                  پنل مدیریت استودیو
-                </Link>
-              </li>
             </ul>
           </div>
 
