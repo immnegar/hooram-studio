@@ -678,53 +678,47 @@ export const Home: React.FC = () => {
           </p>
         </div>
 
-        {/* Why-Us Cards: Horizontal Swipeable on Mobile, 4-Col Grid on Desktop */}
-        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-4 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 no-scrollbar">
-          <div className="w-[78vw] xs:w-[280px] md:w-auto shrink-0 md:shrink snap-center p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-white/[0.04] text-white flex items-center justify-center border border-white/10">
-              <Film className="w-5 h-5 text-white/90" />
+        {/* Why-Us Cards: Compact 2x2 Luxury Grid on Mobile, 4-Col Grid on Desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-6">
+          <div className="p-3.5 sm:p-6 rounded-2xl bg-studio-900/60 border border-slate-800/80 hover:border-indigo-500/30 hover:bg-studio-900/90 transition-all space-y-2 sm:space-y-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white/[0.04] text-white flex items-center justify-center border border-white/10">
+              <Film className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400" />
             </div>
-            <h4 className="text-base font-bold text-white">کارگردانی هنری سینمایی</h4>
-            <p className="text-xs text-neutral-400 leading-relaxed font-light">
+            <h4 className="text-xs sm:text-base font-bold text-white leading-tight">کارگردانی هنری سینمایی</h4>
+            <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed font-light line-clamp-3 sm:line-clamp-none">
               هر فریم از تبلیغات با وسواس کارگردانی، نورپردازی تخصصی، تدوین ریتمیک و اصلاح رنگ استانداردهای سینمایی طراحی می‌شود.
             </p>
           </div>
 
-          <div className="w-[78vw] xs:w-[280px] md:w-auto shrink-0 md:shrink snap-center p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-white/[0.04] text-white flex items-center justify-center border border-white/10">
-              <Clock className="w-5 h-5 text-white/90" />
+          <div className="p-3.5 sm:p-6 rounded-2xl bg-studio-900/60 border border-slate-800/80 hover:border-indigo-500/30 hover:bg-studio-900/90 transition-all space-y-2 sm:space-y-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white/[0.04] text-white flex items-center justify-center border border-white/10">
+              <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
             </div>
-            <h4 className="text-base font-bold text-white">سرعت و دقت در اجرا</h4>
-            <p className="text-xs text-neutral-400 leading-relaxed font-light">
+            <h4 className="text-xs sm:text-base font-bold text-white leading-tight">سرعت و دقت در اجرا</h4>
+            <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed font-light line-clamp-3 sm:line-clamp-none">
               با استفاده از پایپ‌لاین تولید چابک، پروژه‌های ویدیویی و طراحی وب‌سایت در زمان‌بندی شفاف و سریع تحویل داده می‌شوند.
             </p>
           </div>
 
-          <div className="w-[78vw] xs:w-[280px] md:w-auto shrink-0 md:shrink snap-center p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-white/[0.04] text-white flex items-center justify-center border border-white/10">
-              <Award className="w-5 h-5 text-white/90" />
+          <div className="p-3.5 sm:p-6 rounded-2xl bg-studio-900/60 border border-slate-800/80 hover:border-indigo-500/30 hover:bg-studio-900/90 transition-all space-y-2 sm:space-y-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white/[0.04] text-white flex items-center justify-center border border-white/10">
+              <Award className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
             </div>
-            <h4 className="text-base font-bold text-white">شناخت عمیق بازار ایران</h4>
-            <p className="text-xs text-neutral-400 leading-relaxed font-light">
+            <h4 className="text-xs sm:text-base font-bold text-white leading-tight">شناخت عمیق بازار ایران</h4>
+            <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed font-light line-clamp-3 sm:line-clamp-none">
               تمامی سناریوها، پیام‌های تبلیغاتی و تجربیات کاربری وب‌سایت متناسب با روانشناسی مخاطب و رفتارهای مصرف‌کننده داخلی تنظیم می‌گردد.
             </p>
           </div>
 
-          <div className="w-[78vw] xs:w-[280px] md:w-auto shrink-0 md:shrink snap-center p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-white/[0.04] text-white flex items-center justify-center border border-white/10">
-              <TrendingUp className="w-5 h-5 text-white/90" />
+          <div className="p-3.5 sm:p-6 rounded-2xl bg-studio-900/60 border border-slate-800/80 hover:border-indigo-500/30 hover:bg-studio-900/90 transition-all space-y-2 sm:space-y-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white/[0.04] text-white flex items-center justify-center border border-white/10">
+              <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
             </div>
-            <h4 className="text-base font-bold text-white">تمرکز بر بازگشت سرمایه</h4>
-            <p className="text-xs text-neutral-400 leading-relaxed font-light">
+            <h4 className="text-xs sm:text-base font-bold text-white leading-tight">تمرکز بر بازگشت سرمایه</h4>
+            <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed font-light line-clamp-3 sm:line-clamp-none">
               تبلیغات و وب‌سایت‌های ما ابزار تزئینی نیستند؛ هدف اصلی ما جذب مشتریان بیشتر، ساخت اعتبار و افزایش مستقیم فروش برند شماست.
             </p>
           </div>
-        </div>
-
-        {/* Mobile Swipe Hint */}
-        <div className="flex md:hidden items-center justify-center pt-2 text-[11px] text-slate-400 gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-          <span>۴ رکن تمایز و کیفیت استودیو هورام (ورق بزنید)</span>
         </div>
       </section>
 
