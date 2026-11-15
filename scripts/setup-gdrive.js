@@ -108,6 +108,7 @@ export async function runGoogleDriveSetup() {
   authUrl.searchParams.set('access_type', 'offline');
   authUrl.searchParams.set('prompt', 'consent');
   authUrl.searchParams.set('state', state);
+  authUrl.searchParams.set('login_hint', 'hellohooram@gmail.com');
 
   console.log('\n[1/3] Starting temporary local authorization listener on port 8085...');
 
@@ -201,7 +202,7 @@ export async function runGoogleDriveSetup() {
       // 4. Test connection & resolve root folder
       console.log('\n[3/3] Testing Google Drive connection and resolving project folder...');
 
-      const rootFolderName = 'Horam-Studio-Backups';
+      const rootFolderName = 'Hooram-Studio-Backups';
       const searchQ = `mimeType = 'application/vnd.google-apps.folder' and name = '${rootFolderName}' and trashed = false`;
       const searchRes = await fetch(`https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(searchQ)}&fields=files(id,name)&spaces=drive`, {
         headers: { Authorization: `Bearer ${tokenData.access_token}` }
