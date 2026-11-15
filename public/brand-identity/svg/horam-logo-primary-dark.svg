@@ -1,0 +1,34 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 220" width="100%" height="100%">
+  <rect width="920" height="220" fill="#111214" />
+  <!-- Symbol -->
+  <g transform="translate(30, 20) scale(0.3515625)">
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Two optically balanced monolithic arcs forming an infinite circle separated by a light corridor -->
+  <path d="M 256 36 C 377.5 36, 476 134.5, 476 256 C 476 312 455.5 363.3 421.5 402.5 L 348 329 C 362.8 307.7 371.5 282.8 371.5 256 C 371.5 192.2 319.8 140.5 256 140.5 C 229.2 140.5 204.3 149.2 183 164 L 109.5 90.5 C 148.7 56.5 200 36 256 36 Z" fill="#C5A46D" />
+  <path d="M 256 476 C 134.5 476, 36 377.5, 36 256 C 36 200 56.5 148.7 90.5 109.5 L 164 183 C 149.2 204.3 140.5 229.2 140.5 256 C 140.5 319.8 192.2 371.5 256 371.5 C 282.8 371.5 307.7 362.8 329 348 L 402.5 421.5 C 363.3 455.5 312 476 256 476 Z" fill="#C5A46D" />
+  <circle cx="256" cy="256" r="32" fill="#C5A46D" />
+</svg>
+  </g>
+  <!-- Wordmark -->
+  <g transform="translate(260, 46)">
+    
+<g fill="#F5F4F0">
+  <!-- H -->
+  <path d="M 0 0 L 16 0 L 16 38 L 52 38 L 52 0 L 68 0 L 68 96 L 52 96 L 52 54 L 16 54 L 16 96 L 0 96 Z" />
+  <!-- O -->
+  <path d="M 152 0 C 122 0, 98 22, 98 48 C 98 74, 122 96, 152 96 C 182 96, 206 74, 206 48 C 206 22, 182 0, 152 0 Z M 152 16 C 172 16, 189 30, 189 48 C 189 66, 172 80, 152 80 C 132 80, 115 66, 115 48 C 115 30, 132 16, 152 16 Z" />
+  <!-- R -->
+  <path d="M 236 0 L 282 0 C 302 0, 318 12, 318 32 C 318 46, 308 57, 294 61 L 324 96 L 303 96 L 276 64 L 252 64 L 252 96 L 236 96 Z M 252 15 L 252 50 L 280 50 C 292 50, 301 43, 301 32.5 C 301 22, 292 15, 280 15 Z" />
+  <!-- A -->
+  <path d="M 374 0 L 392 0 L 428 96 L 410 96 L 401 72 L 365 72 L 356 96 L 338 96 Z M 371 58 L 395 58 L 383 23 Z" />
+  <!-- M -->
+  <path d="M 452 0 L 471 0 L 494 62 L 517 0 L 536 0 L 536 96 L 520 96 L 520 28 L 501 80 L 487 80 L 468 28 L 468 96 L 452 96 Z" />
+</g>
+    
+<text x="268" y="142" font-family="'Cinzel', -apple-system, sans-serif" font-size="16" letter-spacing="9" fill="#C5A46D" text-anchor="middle" font-weight="600">
+  CREATIVE STUDIO
+</text>
+  </g>
+</svg>

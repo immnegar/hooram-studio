@@ -1,0 +1,976 @@
+import fs from 'fs';
+import path from 'path';
+import { spawn } from 'child_process';
+
+const chromePath = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
+const baseDir = path.resolve('public', 'brand-identity');
+const svgDir = path.join(baseDir, 'svg');
+const pngDir = path.join(baseDir, 'png');
+
+if (!fs.existsSync(svgDir)) fs.mkdirSync(svgDir, { recursive: true });
+if (!fs.existsSync(pngDir)) fs.mkdirSync(pngDir, { recursive: true });
+
+// =========================================================================
+// WEBSITE COLOR TOKENS (Extracted from tailwind.config.js & index.css)
+// =========================================================================
+const COLORS = {
+  obsidian: '#07090E',   // studio-950 (Site Background)
+  surface: '#0B0F19',    // studio-900 (Site Card)
+  indigo: '#6366F1',     // studio-accent (Primary Brand Accent)
+  indigoLight: '#818CF8',// Site gradient start
+  cyan: '#06B6D4',       // studio-cyan (Secondary Digital Accent)
+  cyanLight: '#38BDF8',  // Site gradient end
+  amber: '#F59E0B',      // studio-gold (Sun / Creative Warmth)
+  white: '#FFFFFF',      // Pure White
+  slate50: '#F8FAFC',    // Site text-slate-100
+  slate400: '#94A3B8',   // Site text-slate-400
+  black: '#000000',      // Monochrome Black
+};
+
+// =========================================================================
+// 1. THREE DISTINCT CONCEPTUAL EXPLORATIONS (Flat Single-Color Vectors)
+// =========================================================================
+
+// -------------------------------------------------------------------------
+// CONCEPT 1: "THE RADIANT NEXUS" (نکسوس نور و پرتو مدور هور)
+// A monolithic geometric circle split by a 45-degree diagonal light corridor.
+// Two optically weighted crescent arcs embodying the infinite cycle of light (Hoor).
+// -------------------------------------------------------------------------
+const symbolConcept1 = (color = COLORS.indigo) => `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Two optically balanced monolithic arcs forming an infinite circle separated by a light corridor -->
+  <path d="M 256 40 C 375.3 40, 472 136.7, 472 256 C 472 311.5 451.2 362.2 417 401 L 344 328 C 358.8 307.2 367.5 282.6 367.5 256 C 367.5 194.4 317.6 144.5 256 144.5 C 229.4 144.5 204.8 153.2 184 168 L 111 95 C 149.8 60.8 200.5 40 256 40 Z" fill="${color}" />
+  <path d="M 256 472 C 136.7 472, 40 375.3, 40 256 C 40 200.5 60.8 149.8 95 111 L 168 184 C 153.2 204.8 144.5 229.4 144.5 256 C 144.5 317.6 194.4 367.5 256 367.5 C 282.6 367.5 307.2 358.8 328 344 L 401 417 C 362.2 451.2 311.5 472 256 472 Z" fill="${color}" />
+  <!-- Central optical light core -->
+  <circle cx="256" cy="256" r="30" fill="${color}" />
+</svg>`;
+
+// -------------------------------------------------------------------------
+// CONCEPT 2: "THE DOUBLE-O NEXUS" (پیوند دوگانه O و افق نور هور)
+// Born directly from HOORAM's double 'O' and 'Hoor' (sunlight/infinity).
+// Two pure intersecting circular light rings united by a horizontal beam of clarity.
+// -------------------------------------------------------------------------
+const symbolConcept2 = (color = COLORS.indigo) => `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Left Ring -->
+  <path d="M 216 112 C 136.5 112, 72 176.5, 72 256 C 72 335.5, 136.5 400, 216 400 C 263.6 400, 305.6 376.8, 331.4 341.2 L 287.8 306.8 C 270.8 327.4 245 340, 216 340 C 169.6 340, 132 302.4, 132 256 C 132 209.6, 169.6 172, 216 172 C 245 172, 270.8 184.6, 287.8 205.2 L 331.4 170.8 C 305.6 135.2, 263.6 112, 216 112 Z" fill="${color}" />
+  <!-- Right Ring -->
+  <path d="M 296 112 C 375.5 112, 440 176.5, 440 256 C 440 335.5, 375.5 400, 296 400 C 248.4 400, 206.4 376.8, 180.6 341.2 L 224.2 306.8 C 241.2 327.4 267 340, 296 340 C 342.4 340, 380 302.4, 380 256 C 380 209.6, 342.4 172, 296 172 C 267 172, 241.2 184.6, 224.2 205.2 L 180.6 170.8 C 206.4 135.2, 248.4 112, 296 112 Z" fill="${color}" />
+  <!-- Central optical horizon connector -->
+  <circle cx="256" cy="256" r="24" fill="${color}" />
+</svg>`;
+
+// -------------------------------------------------------------------------
+// CONCEPT 3: "THE LUMINOUS MONOLITH / H-HORIZON" (معماری نور و دو ستون سینما و وب)
+// Architectural elegance: Two vertical pillars joined by a central solar aperture.
+// Subtly forms the letter H and the Persian 'هـ' with pure Swiss/Modernist restraint.
+// -------------------------------------------------------------------------
+const symbolConcept3 = (color = COLORS.indigo) => `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Left Pillar (Film Production) -->
+  <rect x="84" y="72" width="72" height="368" rx="4" fill="${color}" />
+  <!-- Right Pillar (Digital & Web) -->
+  <rect x="356" y="72" width="72" height="368" rx="4" fill="${color}" />
+  <!-- Solar Bridge (Hoor Horizon) -->
+  <path d="M 184 238 L 328 238 C 322 178, 293 130, 256 130 C 219 130, 190 178, 184 238 Z" fill="${color}" />
+  <path d="M 184 274 L 328 274 C 322 334, 293 382, 256 382 C 219 382, 190 334, 184 274 Z" fill="${color}" />
+  <rect x="156" y="244" width="200" height="24" fill="${color}" />
+</svg>`;
+
+// =========================================================================
+// 2. BESPOKE TYPOGRAPHIC WORDMARKS (HOORAM - 2 O's & هورام)
+// =========================================================================
+
+// Latin Wordmark "HOORAM" (Exact double O spelling)
+const latinWordmark = (color = COLORS.white) => `
+<g fill="${color}">
+  <!-- H -->
+  <path d="M 0 0 L 15 0 L 15 39 L 51 39 L 51 0 L 66 0 L 66 96 L 51 96 L 51 55 L 15 55 L 15 96 L 0 96 Z" />
+  <!-- O (First O) -->
+  <path d="M 148 0 C 120 0, 96 22, 96 48 C 96 74, 120 96, 148 96 C 176 96, 200 74, 200 48 C 200 22, 176 0, 148 0 Z M 148 16 C 168 16, 184 30, 184 48 C 184 66, 168 80, 148 80 C 128 80, 112 66, 112 48 C 112 30, 128 16, 148 16 Z" />
+  <!-- O (Second O - Exactly identical geometry & optical spacing) -->
+  <path d="M 260 0 C 232 0, 208 22, 208 48 C 208 74, 232 96, 260 96 C 288 96, 312 74, 312 48 C 312 22, 288 0, 260 0 Z M 260 16 C 280 16, 296 30, 296 48 C 296 66, 280 80, 260 80 C 240 80, 224 66, 224 48 C 224 30, 240 16, 260 16 Z" />
+  <!-- R -->
+  <path d="M 342 0 L 388 0 C 408 0, 424 12, 424 32 C 424 46, 414 57, 400 61 L 430 96 L 409 96 L 382 64 L 358 64 L 358 96 L 342 96 Z M 358 15 L 358 50 L 386 50 C 398 50, 407 43, 407 32.5 C 407 22, 398 15, 386 15 Z" />
+  <!-- A -->
+  <path d="M 480 0 L 498 0 L 534 96 L 516 96 L 507 72 L 471 72 L 462 96 L 444 96 Z M 477 58 L 501 58 L 489 23 Z" />
+  <!-- M -->
+  <path d="M 558 0 L 577 0 L 600 62 L 623 0 L 642 0 L 642 96 L 626 96 L 626 28 L 607 80 L 593 80 L 574 28 L 574 96 L 558 96 Z" />
+</g>`;
+
+// Persian Wordmark "هورام" (Bespoke balanced geometry)
+const persianWordmark = (color = COLORS.white) => `
+<g fill="${color}">
+  <!-- هـ (Eye of Hoor) -->
+  <path d="M 480 32 C 452 32, 428 54, 428 80 C 428 92, 436 96, 448 96 L 504 96 C 516 96, 524 88, 524 78 C 524 52, 502 32, 480 32 Z M 480 48 C 493 48, 506 59, 506 74 C 506 81, 501 83, 492 83 L 454 83 C 447 83, 444 80, 444 74 C 444 59, 461 48, 480 48 Z" />
+  <!-- و (Vav of Hoor) -->
+  <path d="M 364 36 C 344 36, 328 52, 328 72 C 328 84, 334 94, 346 96 L 316 132 L 332 132 L 358 100 L 384 100 C 398 100, 406 90, 406 76 C 406 54, 388 36, 364 36 Z M 364 50 C 376 50, 388 60, 388 74 C 388 83, 382 87, 372 87 L 350 87 C 344 87, 342 81, 342 74 C 342 60, 352 50, 364 50 Z" />
+  <!-- ر (Re) -->
+  <path d="M 284 56 L 268 56 L 244 116 C 240 126, 230 134, 214 134 L 206 134 L 206 120 L 214 120 C 224 120, 230 114, 234 106 Z" />
+  <!-- ا (Alef) -->
+  <path d="M 166 12 L 182 12 L 182 96 L 166 96 Z" />
+  <!-- م (Mim) -->
+  <path d="M 94 48 C 76 48, 62 62, 62 80 C 62 92, 70 98, 84 98 L 126 98 L 126 148 L 110 148 L 110 110 L 84 110 C 62 110, 46 96, 46 78 C 46 52, 68 34, 94 34 C 114 34, 126 44, 126 56 L 112 56 C 112 50, 104 48, 94 48 Z" />
+</g>`;
+
+// Sub-label "CREATIVE STUDIO"
+const subLabelLatin = (color = COLORS.indigo) => `
+<text x="321" y="142" font-family="'Inter', sans-serif" font-size="15" letter-spacing="9" fill="${color}" text-anchor="middle" font-weight="600">
+  CREATIVE STUDIO
+</text>`;
+
+// Persian Sub-label "استودیو تبلیغات و دیجیتال"
+const subLabelPersian = (color = COLORS.indigo) => `
+<text x="270" y="172" font-family="'Vazirmatn', sans-serif" font-size="16" letter-spacing="1" fill="${color}" text-anchor="middle" font-weight="500">
+  استودیو تبلیغات و دیزاین دیجیتال
+</text>`;
+
+// =========================================================================
+// 3. MASTER LOGO COMPOSITIONS (Using Concept 1: The Radiant Nexus)
+// =========================================================================
+
+// Primary Horizontal Logo (Symbol + HOORAM)
+const primaryHorizontalSvg = (bg = 'transparent', symbolColor = COLORS.indigo, textColor = COLORS.white, subColor = COLORS.indigo) => `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 220" width="100%" height="100%">
+  ${bg !== 'transparent' ? `<rect width="1020" height="220" fill="${bg}" />` : ''}
+  <!-- Symbol -->
+  <g transform="translate(30, 20) scale(0.3515625)">
+    ${symbolConcept1(symbolColor)}
+  </g>
+  <!-- Wordmark HOORAM -->
+  <g transform="translate(250, 46)">
+    ${latinWordmark(textColor)}
+    ${subLabelLatin(subColor)}
+  </g>
+</svg>`;
+
+// Persian Horizontal Logo (Symbol + هورام)
+const persianHorizontalSvg = (bg = 'transparent', symbolColor = COLORS.indigo, textColor = COLORS.white, subColor = COLORS.indigo) => `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 220" width="100%" height="100%" dir="rtl">
+  ${bg !== 'transparent' ? `<rect width="960" height="220" fill="${bg}" />` : ''}
+  <!-- Wordmark هورام -->
+  <g transform="translate(100, 25)">
+    ${persianWordmark(textColor)}
+    ${subLabelPersian(subColor)}
+  </g>
+  <!-- Symbol on right -->
+  <g transform="translate(750, 20) scale(0.3515625)">
+    ${symbolConcept1(symbolColor)}
+  </g>
+</svg>`;
+
+// Vertical Lockup
+const verticalLogoSvg = (bg = 'transparent', symbolColor = COLORS.indigo, textColor = COLORS.white, subColor = COLORS.indigo) => `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 720" width="100%" height="100%">
+  ${bg !== 'transparent' ? `<rect width="700" height="720" fill="${bg}" />` : ''}
+  <!-- Symbol Center -->
+  <g transform="translate(194, 50) scale(0.609375)">
+    ${symbolConcept1(symbolColor)}
+  </g>
+  <!-- Wordmark HOORAM Center -->
+  <g transform="translate(29, 430)">
+    ${latinWordmark(textColor)}
+    ${subLabelLatin(subColor)}
+  </g>
+</svg>`;
+
+// Standalone Symbol
+const standaloneSymbolSvg = (color = COLORS.indigo, bg = 'transparent') => `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  ${bg !== 'transparent' ? `<rect width="512" height="512" fill="${bg}" />` : ''}
+  ${symbolConcept1(color)}
+</svg>`;
+
+// Save all 13 Required Production SVGs
+console.log('Writing production vector files matching exact website colors...');
+
+// Concept exploration symbols
+fs.writeFileSync(path.join(svgDir, 'concept-1-radiant-nexus.svg'), symbolConcept1(COLORS.indigo));
+fs.writeFileSync(path.join(svgDir, 'concept-2-double-o-nexus.svg'), symbolConcept2(COLORS.indigo));
+fs.writeFileSync(path.join(svgDir, 'concept-3-luminous-monolith.svg'), symbolConcept3(COLORS.indigo));
+
+// Deliverable 1: Primary Logo (symbol + HOORAM)
+fs.writeFileSync(path.join(svgDir, '1-hooram-primary-dark.svg'), primaryHorizontalSvg(COLORS.obsidian, COLORS.indigo, COLORS.white, COLORS.indigoLight));
+// Deliverable 2: Persian Logo (symbol + هورام)
+fs.writeFileSync(path.join(svgDir, '2-hooram-persian-dark.svg'), persianHorizontalSvg(COLORS.obsidian, COLORS.indigo, COLORS.white, COLORS.indigoLight));
+// Deliverable 3: Symbol-only Version
+fs.writeFileSync(path.join(svgDir, '3-hooram-symbol-brand.svg'), standaloneSymbolSvg(COLORS.indigo, 'transparent'));
+// Deliverable 4: Horizontal Logo Composition
+fs.writeFileSync(path.join(svgDir, '4-hooram-horizontal-transparent.svg'), primaryHorizontalSvg('transparent', COLORS.indigo, COLORS.white, COLORS.cyanLight));
+// Deliverable 5: Vertical Logo Composition
+fs.writeFileSync(path.join(svgDir, '5-hooram-vertical-dark.svg'), verticalLogoSvg(COLORS.obsidian, COLORS.indigo, COLORS.white, COLORS.indigoLight));
+// Deliverable 6: Monochrome Black Version
+fs.writeFileSync(path.join(svgDir, '6-hooram-monochrome-black.svg'), primaryHorizontalSvg('transparent', COLORS.black, COLORS.black, COLORS.black));
+// Deliverable 7: Monochrome White Version
+fs.writeFileSync(path.join(svgDir, '7-hooram-monochrome-white.svg'), primaryHorizontalSvg('transparent', COLORS.white, COLORS.white, COLORS.white));
+// Deliverable 8: Website-Color Version (Indigo & Cyan Brand Accent)
+fs.writeFileSync(path.join(svgDir, '8-hooram-website-color.svg'), primaryHorizontalSvg(COLORS.surface, COLORS.indigo, COLORS.white, COLORS.cyanLight));
+// Deliverable 9: Dark-Background Version (Obsidian #07090E)
+fs.writeFileSync(path.join(svgDir, '9-hooram-dark-background.svg'), primaryHorizontalSvg(COLORS.obsidian, COLORS.indigo, COLORS.slate50, COLORS.cyanLight));
+// Deliverable 10: Light-Background Version (White #FFFFFF)
+fs.writeFileSync(path.join(svgDir, '10-hooram-light-background.svg'), primaryHorizontalSvg(COLORS.white, COLORS.indigo, COLORS.obsidian, COLORS.indigo));
+// Deliverable 11: Favicons (16, 32, 48)
+fs.writeFileSync(path.join(svgDir, '11-hooram-favicon.svg'), standaloneSymbolSvg(COLORS.indigo, COLORS.obsidian));
+// Deliverable 12: Social Media Avatar
+fs.writeFileSync(path.join(svgDir, '12-hooram-social-avatar.svg'), standaloneSymbolSvg(COLORS.indigo, COLORS.obsidian));
+// Deliverable 13: Website Header Logo
+fs.writeFileSync(path.join(svgDir, '13-hooram-website-header.svg'), primaryHorizontalSvg('transparent', COLORS.indigo, COLORS.white, COLORS.slate400));
+
+console.log('Saved 13 production SVGs in public/brand-identity/svg/');
+
+// =========================================================================
+// 4. HTML PRESENTATION SHEET (Including Real-World Context Testing)
+// =========================================================================
+const presentationHtml = `<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>هویت بصری و دیزاین سیستم لوگوی استودیو هورام | HOORAM STUDIO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --site-bg: #07090E;
+      --site-surface: #0B0F19;
+      --site-border: rgba(255, 255, 255, 0.08);
+      --site-indigo: #6366F1;
+      --site-indigo-light: #818CF8;
+      --site-cyan: #06B6D4;
+      --site-cyan-light: #38BDF8;
+      --site-amber: #F59E0B;
+      --site-text: #F8FAFC;
+      --site-muted: #94A3B8;
+    }
+    body {
+      background-color: var(--site-bg);
+      color: var(--site-text);
+      font-family: 'Vazirmatn', -apple-system, sans-serif;
+      padding: 50px 30px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrapper {
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .brand-header {
+      border-bottom: 1px solid var(--site-border);
+      padding-bottom: 28px;
+      margin-bottom: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .brand-tag {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--site-cyan-light);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+    .brand-sub {
+      color: var(--site-muted);
+      font-size: 14px;
+      font-weight: 300;
+    }
+    .meta-col {
+      text-align: left;
+      direction: ltr;
+      font-size: 12px;
+      color: var(--site-muted);
+      font-family: 'Inter', monospace;
+    }
+
+    /* Section Headings */
+    .sec-header {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--site-indigo-light);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sec-header::after {
+      content: '';
+      flex-grow: 1;
+      height: 1px;
+      background: var(--site-border);
+    }
+
+    /* 3 Concepts Grid */
+    .concepts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    @media (max-width: 960px) {
+      .concepts-grid { grid-template-columns: 1fr; }
+    }
+    .concept-card {
+      background: var(--site-surface);
+      border: 1px solid var(--site-border);
+      border-radius: 20px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .concept-card.master {
+      border-color: var(--site-indigo);
+      background: linear-gradient(180deg, rgba(99, 102, 241, 0.08) 0%, rgba(11, 15, 25, 0.95) 100%);
+      box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.25);
+    }
+    .badge-master {
+      position: absolute;
+      top: -11px;
+      left: 24px;
+      background: var(--site-indigo);
+      color: #FFFFFF;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+    .symbol-preview {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .c-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+    .c-en {
+      font-size: 11px;
+      color: var(--site-cyan-light);
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+      direction: ltr;
+      text-align: right;
+    }
+    .c-desc {
+      font-size: 12.5px;
+      color: var(--site-muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      flex-grow: 1;
+      font-weight: 300;
+    }
+    .matrix-row {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 7px 0;
+      font-size: 11px;
+    }
+    .matrix-lbl { color: var(--site-muted); }
+    .matrix-val { color: #FFFFFF; font-weight: 600; }
+
+    /* Master Identity Hero */
+    .master-banner {
+      background: var(--site-surface);
+      border: 1px solid var(--site-indigo);
+      border-radius: 24px;
+      padding: 48px;
+      margin-bottom: 60px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+      align-items: center;
+      box-shadow: 0 25px 50px -20px rgba(0,0,0,0.8);
+    }
+    @media (max-width: 900px) {
+      .master-banner { grid-template-columns: 1fr; }
+    }
+    .master-logo-box {
+      background: #040508;
+      border: 1px solid var(--site-border);
+      border-radius: 16px;
+      padding: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .master-details h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+    }
+    .master-details p {
+      font-size: 13px;
+      color: var(--site-muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
+
+    /* Color Swatches Grid */
+    .swatches-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .swatch {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--site-border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-family: 'Inter', monospace;
+    }
+    .swatch-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+    }
+
+    /* Deliverables Grid */
+    .deliverables-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+    .deliv-card {
+      border: 1px solid var(--site-border);
+      border-radius: 16px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+    }
+    .deliv-card.dark { background: var(--site-bg); }
+    .deliv-card.light { background: #FFFFFF; color: #111; }
+    .deliv-caption {
+      margin-top: 14px;
+      font-size: 11px;
+      color: var(--site-muted);
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Real World Tests Grid */
+    .tests-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+    @media (max-width: 1000px) {
+      .tests-grid { grid-template-columns: 1fr; }
+    }
+    .test-card {
+      background: var(--site-surface);
+      border: 1px solid var(--site-border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .test-header-lbl {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--site-cyan-light);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    /* 1. Header Dark Mockup */
+    .nav-mockup {
+      background: rgba(7, 9, 14, 0.95);
+      border: 1px solid var(--site-border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-mockup-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-mockup-symbol {
+      width: 32px;
+      height: 32px;
+    }
+    .nav-mockup-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .nav-mockup-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.2;
+    }
+    .nav-mockup-sub {
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      color: var(--site-muted);
+      font-family: 'Inter', sans-serif;
+    }
+    .nav-mockup-links {
+      display: flex;
+      gap: 8px;
+    }
+    .nav-mockup-pill {
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      color: var(--site-muted);
+    }
+    .nav-mockup-pill.active {
+      background: var(--site-indigo);
+      color: #FFF;
+    }
+
+    /* 2. Google Search Result Mockup */
+    .google-mockup {
+      background: #202124;
+      border: 1px solid #303134;
+      border-radius: 12px;
+      padding: 14px;
+      text-align: right;
+    }
+    .google-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .google-ico {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #000;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      flex-shrink: 0;
+    }
+    .google-host {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      color: #DADCE0;
+      font-weight: 500;
+    }
+    .google-url {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 11px;
+      color: #9AA0A6;
+    }
+    .google-h1 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #99C3FF;
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+    .google-p {
+      font-size: 11.5px;
+      color: #BDC1C6;
+      line-height: 1.45;
+    }
+
+    /* 3. Film Opening Slate */
+    .slate-box {
+      aspect-ratio: 16 / 9;
+      background: #030406;
+      border-radius: 12px;
+      border: 1px solid var(--site-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .slate-box svg {
+      width: 54px;
+      height: 54px;
+      margin-bottom: 10px;
+    }
+    .slate-h {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      letter-spacing: 9px;
+      font-weight: 700;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      margin-left: -9px; /* Optical center for letter-spacing */
+    }
+    .slate-sub {
+      font-size: 8px;
+      letter-spacing: 3px;
+      color: var(--site-indigo-light);
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+
+    /* 4. Social Avatar */
+    .avatar-mockup {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #000;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--site-border);
+    }
+    .avatar-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--site-bg);
+      border: 2px solid var(--site-indigo);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      flex-shrink: 0;
+    }
+    .avatar-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .avatar-handle {
+      font-size: 13px;
+      font-weight: 700;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+    }
+    .avatar-bio {
+      font-size: 11px;
+      color: var(--site-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Header -->
+    <header class="brand-header">
+      <div>
+        <div class="brand-tag">Visual Identity System • 2026 Specification</div>
+        <h1>استودیو تبلیغاتی هورام <span>HOORAM STUDIO</span></h1>
+        <p class="brand-sub">طراحی هویت بصری اصیل، مینیمال و منطبق ۱۰۰٪ بر پالت رنگی و استانداردهای وب‌سایت هورام</p>
+      </div>
+      <div class="meta-details">
+        <div>SPELLING: H-O-O-R-A-M (Double O)</div>
+        <div>PALETTE: Studio Obsidian & Electric Indigo</div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: 3 Genuinely Distinct Explorations -->
+    <div class="sec-header">۰۱ / بررسی سه کانسپت انتزاعی متمایز (مفهوم نور بی‌پایان - هور)</div>
+    <div class="concepts-grid">
+      <!-- Concept 1 -->
+      <div class="concept-card master">
+        <div class="badge-master">رویکرد منتخب برتر</div>
+        <div class="symbol-preview">
+          ${symbolConcept1(COLORS.indigo)}
+        </div>
+        <div class="c-name">نکسوس تابش نور (The Radiant Nexus)</div>
+        <div class="c-en">DIRECTION 1 • CIRCULAR CONTINUITY & LIGHT BEAM</div>
+        <p class="c-desc">
+          فرم هندسی دایره کامل که توسط دو کمان متقارن و یک راهروی زاویه‌دار نور (۴۵ درجه) به حرکت درآمده است. هسته مرکزی نور در محل تلاقی کادر، مفهوم خورشید و روشنایی اصیل «هور» و پرتو پروژکتور سینما و پیکسل وب را به صورت کاملاً آبستره و بدون کلیشه بازتاب می‌دهد.
+        </p>
+        <div class="matrix-row">
+          <span class="matrix-lbl">خوانایی در سایز ۱۶ پیکسلی گوگل</span>
+          <span class="matrix-val" style="color: #4ADE80;">۱۰ از ۱۰ (بی‌نقص)</span>
+        </div>
+        <div class="matrix-row">
+          <span class="matrix-lbl">انطباق با هویت سایت فعلی</span>
+          <span class="matrix-val" style="color: #4ADE80;">۱۰۰٪ همگون</span>
+        </div>
+        <div class="matrix-row">
+          <span class="matrix-lbl">پایداری برداری تک‌رنگ (Flat)</span>
+          <span class="matrix-val">۱۰۰٪ وکتور خالص</span>
+        </div>
+        <div class="matrix-row">
+          <span class="matrix-lbl">تمایز و اصالت نشان تجاری</span>
+          <span class="matrix-val">۹.۹ از ۱۰</span>
+        </div>
+      </div>
+
+      <!-- Concept 2 -->
+      <div class="concept-card">
+        <div class="symbol-preview">
+          ${symbolConcept2(COLORS.indigo)}
+        </div>
+        <div class="c-name">پیوند دوگانه O و افق نور (Double-O Nexus)</div>
+        <div class="c-en">DIRECTION 2 • TYPOGRAPHIC TWO O's & HORIZON</div>
+        <p class="c-desc">
+          الهام‌گرفته از ساختار هویتی نام هورام با دو حرف O پیاپی (H-OO-RAM)؛ دو حلقه متقاطع نور که بی‌نهایت، دید دوچشمی کارگردان و اتصال دو دنیای فیلم و وب را بازنمایی می‌کنند و مرکز آن افق تابان هور را شکل می‌دهد.
+        </p>
+        <div class="matrix-row">
+          <span class="matrix-lbl">خوانایی در سایز ۱۶ پیکسلی گوگل</span>
+          <span class="matrix-val">۸.۸ از ۱۰</span>
+        </div>
+        <div class="matrix-row">
+          <span class="matrix-lbl">انطباق با هویت سایت فعلی</span>
+          <span class="matrix-val">۹۵٪ همگون</span>
+        </div>
+        <div class="matrix-row">
+          <span class="matrix-lbl">پایداری برداری تک‌رنگ (Flat)</span>
+          <span class="matrix-val">۱۰۰٪ وکتور خالص</span>
+        </div>
+        <div class="matrix-row">
+          <span class="matrix-lbl">تمایز و اصالت نشان تجاری</span>
+          <span class="matrix-val">۹.۳ از ۱۰</span>
+        </div>
+      </div>
+
+      <!-- Concept 3 -->
+      <div class="concept-card">
+        <div class="symbol-preview">
+          ${symbolConcept3(COLORS.indigo)}
+        </div>
+        <div class="c-name">معماری افق نور (Luminous Monolith)</div>
+        <div class="c-en">DIRECTION 3 • DUAL PILLARS & CELESTIAL BRIDGE</div>
+        <p class="c-desc">
+          دو ستون ایستا و مینیمال (نماد دو دپارتمان تولید فیلم و طراحی وب) که دیسک خورشیدی هور (با برش افقی دقیق) آن دو را به هم پیوند زده و فرم باشکوه حرف H را خلق کرده است.
+        </p>
+        <div class="matrix-row">
+          <span class="matrix-lbl">خوانایی در سایز ۱۶ پیکسلی گوگل</span>
+          <span class="matrix-val">۹.۰ از ۱۰</span>
+        </div>
+        <div class="matrix-row">
+          <span class="matrix-lbl">انطباق با هویت سایت فعلی</span>
+          <span class="matrix-val">۹۲٪ همگون</span>
+        </div>
+        <div class="matrix-row">
+          <span class="matrix-lbl">پایداری برداری تک‌رنگ (Flat)</span>
+          <span class="matrix-val">۱۰۰٪ وکتور خالص</span>
+        </div>
+        <div class="matrix-row">
+          <span class="matrix-lbl">تمایز و اصالت نشان تجاری</span>
+          <span class="matrix-val">۹.۱ از ۱۰</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Master Identity Banner -->
+    <div class="sec-header">۰۲ / نشان رسمی و دیزاین سیستم کانسپت برتر: نکسوس تابش نور (The Radiant Nexus)</div>
+    <div class="master-banner">
+      <div class="master-logo-box">
+        <div style="width: 100%; max-width: 520px;">
+          ${primaryHorizontalSvg('transparent', COLORS.indigo, COLORS.white, COLORS.cyanLight)}
+        </div>
+      </div>
+      <div class="master-details">
+        <h2>نور بی‌پایان، وقار هندسی و اصالت استودیو</h2>
+        <p>
+          نشان <strong>نکسوس تابش نور</strong> بر پایه ریشه واژه کهن <strong>«هور»</strong> (نور، خورشید و روشنایی) شکل گرفته است. این نماد بدون استفاده از هرگونه المان کلیشه‌ای یا خطوط اضافه، با دو کمان متوازن و راهروی نور ۴۵ درجه، هویت مقتدر یک استودیوی پیشرو در تیزرسازی سینمایی و خلق پلتفرم‌های دیجیتال وب را به نمایش می‌گذارد.
+        </p>
+        <p>
+          <strong>دیکته نام برند:</strong> نام انگلیسی دقیقاً با دو حرف O متوالی (<strong>HOORAM</strong>) و تایپوگرافی هندسی متناسب با حروف کلمه «هورام» در فونت فارسی تنظیم شده است.
+        </p>
+        <div class="swatches-row">
+          <div class="swatch">
+            <div class="swatch-color" style="background: ${COLORS.obsidian}; border: 1px solid #333;"></div>
+            <span>#07090E (Studio 950)</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: ${COLORS.indigo};"></div>
+            <span>#6366F1 (Studio Accent)</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: ${COLORS.cyanLight};"></div>
+            <span>#38BDF8 (Studio Cyan)</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: ${COLORS.white};"></div>
+            <span>#FFFFFF (Pure White)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: Deliverables Grid (Dark & Light Applications) -->
+    <div class="sec-header">۰۳ / ترکیب‌بندی‌های افقی، عمودی، فارسی و مونوکروم (تحویل ۱۰۰٪ وکتور)</div>
+    <div class="deliverables-grid">
+      <!-- Latin Primary Dark -->
+      <div class="deliv-card dark">
+        <div style="width: 100%; max-width: 480px;">
+          ${primaryHorizontalSvg('transparent', COLORS.indigo, COLORS.white, COLORS.cyanLight)}
+        </div>
+        <div class="deliv-caption">Primary Horizontal Lockup • Studio Obsidian Background</div>
+      </div>
+      <!-- Latin Primary Light -->
+      <div class="deliv-card light">
+        <div style="width: 100%; max-width: 480px;">
+          ${primaryHorizontalSvg('transparent', COLORS.indigo, COLORS.obsidian, COLORS.indigo)}
+        </div>
+        <div class="deliv-caption">Primary Horizontal Lockup • Pure White Background</div>
+      </div>
+      <!-- Persian Primary Dark -->
+      <div class="deliv-card dark">
+        <div style="width: 100%; max-width: 480px;">
+          ${persianHorizontalSvg('transparent', COLORS.indigo, COLORS.white, COLORS.cyanLight)}
+        </div>
+        <div class="deliv-caption">Persian Lockup (استودیو تبلیغات هورام) • Dark</div>
+      </div>
+      <!-- Persian Primary Light -->
+      <div class="deliv-card light">
+        <div style="width: 100%; max-width: 480px;">
+          ${persianHorizontalSvg('transparent', COLORS.indigo, COLORS.obsidian, COLORS.indigo)}
+        </div>
+        <div class="deliv-caption">Persian Lockup (استودیو تبلیغات هورام) • Light</div>
+      </div>
+      <!-- Monochrome Pure White -->
+      <div class="deliv-card dark">
+        <div style="width: 100%; max-width: 480px;">
+          ${primaryHorizontalSvg('transparent', COLORS.white, COLORS.white, COLORS.white)}
+        </div>
+        <div class="deliv-caption">Monochrome Pure White Silhouette (تک‌رنگ سفید)</div>
+      </div>
+      <!-- Monochrome Pure Black -->
+      <div class="deliv-card light">
+        <div style="width: 100%; max-width: 480px;">
+          ${primaryHorizontalSvg('transparent', COLORS.black, COLORS.black, COLORS.black)}
+        </div>
+        <div class="deliv-caption">Monochrome Pure Black Silhouette (تک‌رنگ مشکی)</div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: Real-World Environment Testing -->
+    <div class="sec-header">۰۴ / اعتبارسنجی در محیط‌های واقعی (هدر سایت هورام، گوگل سرچ، اسلیت سینما و آواتار)</div>
+    <div class="tests-grid">
+      <!-- Test 1: Actual Header of Hooram Website -->
+      <div class="test-card">
+        <div class="test-header-lbl">۱. نمایش زنده در هدر واقعی سایت هورام (Header)</div>
+        <div class="nav-mockup">
+          <div class="nav-mockup-brand">
+            <div class="nav-mockup-symbol">
+              ${symbolConcept1(COLORS.indigo)}
+            </div>
+            <div class="nav-mockup-text">
+              <span class="nav-mockup-title">استودیو تبلیغاتی هورام</span>
+              <span class="nav-mockup-sub">HOORAM STUDIO</span>
+            </div>
+          </div>
+          <div class="nav-mockup-links">
+            <span class="nav-mockup-pill active">خانه</span>
+            <span class="nav-mockup-pill">خدمات</span>
+            <span class="nav-mockup-pill">نمونه‌کارها</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Test 2: Google Search Snippet at 16x16px -->
+      <div class="test-card">
+        <div class="test-header-lbl">۲. تست فاوآیکون در نتایج گوگل سرچ (Google Search 16px)</div>
+        <div class="google-mockup">
+          <div class="google-row">
+            <div class="google-ico">
+              ${symbolConcept1(COLORS.indigo)}
+            </div>
+            <div>
+              <div class="google-host">hooramstudio.ir</div>
+              <div class="google-url">https://hooramstudio.ir</div>
+            </div>
+          </div>
+          <div class="google-h1">استودیو تبلیغاتی هورام | تولید فیلم‌های تبلیغاتی و طراحی وب‌سایت</div>
+          <div class="google-p">استودیو خلاق هورام؛ خلق فیلم‌ها و تیزرهای تبلیغاتی سینمایی، ویدیوهای تجاری و طراحی وب‌سایت‌های مدرن...</div>
+        </div>
+      </div>
+
+      <!-- Test 3: 4K Film Opening Slate -->
+      <div class="test-card">
+        <div class="test-header-lbl">۳. تیتراژ ابتدایی فیلم و تیزر سینمایی (16:9 4K Slate)</div>
+        <div class="slate-box">
+          ${symbolConcept1(COLORS.white)}
+          <div class="slate-h">HOORAM</div>
+          <div class="slate-sub">A CINEMATIC PRODUCTION</div>
+        </div>
+      </div>
+
+      <!-- Test 4: Social Media Profile Avatar -->
+      <div class="test-card">
+        <div class="test-header-lbl">۴. آواتار گرد اینستاگرام و شبکه‌های اجتماعی</div>
+        <div class="avatar-mockup">
+          <div class="avatar-circle">
+            ${symbolConcept1(COLORS.indigo)}
+          </div>
+          <div class="avatar-info">
+            <span class="avatar-handle">hooramstudio.ir</span>
+            <span class="avatar-bio">استودیو تبلیغات و توسعه وب</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Test 5: Favicon Scale Test (48px, 32px, 16px) -->
+      <div class="test-card">
+        <div class="test-header-lbl">۵. تست مقیاس‌پذیری فاوآیکون (48px, 32px, 16px)</div>
+        <div style="background: #000; border-radius: 12px; padding: 20px; display: flex; align-items: center; justify-content: space-around;">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div style="width: 48px; height: 48px;">${symbolConcept1(COLORS.indigo)}</div>
+            <span style="font-size: 10px; color: var(--site-muted);">48×48px</span>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div style="width: 32px; height: 32px;">${symbolConcept1(COLORS.indigo)}</div>
+            <span style="font-size: 10px; color: var(--site-muted);">32×32px</span>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div style="width: 16px; height: 16px;">${symbolConcept1(COLORS.indigo)}</div>
+            <span style="font-size: 10px; color: var(--site-muted);">16×16px</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Test 6: Monochrome Flat Stationery Seal -->
+      <div class="test-card">
+        <div class="test-header-lbl">۶. مُهر اداری و سربرگ مونوکروم (حذف تمام افکت‌ها)</div>
+        <div style="background: #FFFFFF; color: #000; border-radius: 12px; padding: 18px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="width: 36px; height: 36px;">
+            ${symbolConcept1('#000000')}
+          </div>
+          <div style="text-align: left; direction: ltr; font-family: 'Inter', sans-serif;">
+            <div style="font-size: 13px; font-weight: 800; letter-spacing: 2px;">HOORAM STUDIO</div>
+            <div style="font-size: 9px; color: #666;">OFFICIAL IDENTITY SEAL</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+
+fs.writeFileSync(path.resolve('public', 'brand-identity', 'hooram-presentation.html'), presentationHtml);
+console.log('Saved master presentation sheet in public/brand-identity/hooram-presentation.html');
+

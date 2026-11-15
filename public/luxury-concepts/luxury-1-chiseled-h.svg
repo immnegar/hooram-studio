@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="gold_metallic" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="25%" stop-color="#FCE7A6" />
+      <stop offset="50%" stop-color="#D4AF37" />
+      <stop offset="75%" stop-color="#AA7C11" />
+      <stop offset="100%" stop-color="#5B4307" />
+    </linearGradient>
+    <linearGradient id="gold_hairline" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#D4AF37" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#AA7C11" stop-opacity="0.1" />
+    </linearGradient>
+    <linearGradient id="facet_shadow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#84620D" />
+    </linearGradient>
+    <radialGradient id="lux_ambient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#141926" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#040508" stop-opacity="1" />
+    </radialGradient>
+  </defs>
+
+  <!-- Deep Obsidian Field -->
+  <rect width="512" height="512" fill="url(#lux_ambient)" />
+
+  <!-- Master Emblem: Chiseled Architectural H -->
+  <g transform="translate(40, 40) scale(0.84375)">
+    <!-- Outer Hairline Frame / Viewfinder Ratio Box -->
+    <rect x="24" y="24" width="464" height="464" rx="20" fill="none" stroke="url(#gold_hairline)" stroke-width="1.5" />
+    
+    <!-- Fine 16:9 Cinema Corner Marks -->
+    <path d="M 24 56 L 24 24 L 56 24" fill="none" stroke="#D4AF37" stroke-width="2" />
+    <path d="M 488 56 L 488 24 L 456 24" fill="none" stroke="#D4AF37" stroke-width="2" />
+    <path d="M 24 456 L 24 488 L 56 488" fill="none" stroke="#D4AF37" stroke-width="2" />
+    <path d="M 488 456 L 488 488 L 456 488" fill="none" stroke="#D4AF37" stroke-width="2" />
+
+    <!-- Left Pillar (Beveled Luxury Cut) -->
+    <!-- Left Face -->
+    <polygon points="120,96 168,96 168,416 120,416" fill="url(#gold_metallic)" />
+    <!-- Chiseled Inner Bevel -->
+    <polygon points="168,96 196,124 196,388 168,416" fill="url(#facet_shadow)" />
+
+    <!-- Right Pillar (Beveled Luxury Cut) -->
+    <!-- Chiseled Inner Bevel -->
+    <polygon points="316,124 344,96 344,416 316,388" fill="url(#facet_shadow)" />
+    <!-- Right Face -->
+    <polygon points="344,96 392,96 392,416 344,416" fill="url(#gold_metallic)" />
+
+    <!-- Center Cinematic Diamond Prism Crossbar (Negative Space + Golden Shutter Facet) -->
+    <polygon points="196,256 256,220 316,256 256,292" fill="#FFFFFF" />
+    <polygon points="196,256 256,236 316,256 256,276" fill="url(#gold_metallic)" />
+    
+    <!-- Central Anamorphic Star Glint -->
+    <circle cx="256" cy="256" r="3" fill="#FFFFFF" />
+  </g>
+</svg>

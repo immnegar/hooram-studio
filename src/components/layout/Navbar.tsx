@@ -111,7 +111,7 @@ export const Navbar: React.FC = () => {
                   استودیو تبلیغاتی هورام
                 </span>
                 <span className="text-[9px] sm:text-[10px] tracking-widest text-slate-400 uppercase font-mono font-medium">
-                  CREATIVE ADVERTISING STUDIO
+                  HOORAM STUDIO
                 </span>
               </div>
             </Link>
@@ -177,7 +177,7 @@ export const Navbar: React.FC = () => {
               aria-hidden="true"
               className="absolute -left-12 top-1/2 -translate-y-1/2 font-mono font-black text-[30vw] text-white/[0.025] tracking-tighter uppercase rotate-90 select-none"
             >
-              HORAM
+              HOORAM
             </span>
             {/* Subtle Restrained Ambient Aura */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-600/[0.04] rounded-full blur-3xl" />
@@ -193,7 +193,7 @@ export const Navbar: React.FC = () => {
                   استودیو تبلیغاتی هورام
                 </span>
                 <span className="text-[9px] tracking-widest text-slate-400 uppercase font-mono font-medium">
-                  CREATIVE ADVERTISING STUDIO
+                  HOORAM STUDIO
                 </span>
               </div>
             </Link>
