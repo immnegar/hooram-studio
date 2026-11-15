@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Shield, Sparkles, Lock, Mail, AlertCircle, ArrowLeft } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { useAuth } from '../../context/AuthContext';
+import { LogoSymbol } from '../../components/common/LogoSymbol';
 
 export const AdminLogin: React.FC = () => {
   const { login } = useAuth();
@@ -33,12 +34,10 @@ export const AdminLogin: React.FC = () => {
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
 
       <div className="max-w-md w-full glass-card rounded-3xl p-8 sm:p-10 border border-slate-800 relative z-10 space-y-6">
-        <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-600/20 text-indigo-400 mx-auto flex items-center justify-center border border-indigo-500/30">
-            <Shield className="w-6 h-6" />
-          </div>
+        <div className="text-center space-y-3">
+          <LogoSymbol className="w-14 h-14 mx-auto drop-shadow-[0_4px_20px_rgba(99,102,241,0.35)]" />
           <h2 className="text-2xl font-bold text-white">ورود به پنل مدیریت هورام</h2>
-          <p className="text-xs text-slate-400">سامانه مدیریت یکپارچه استودیو خلاق</p>
+          <p className="text-xs text-slate-400">سامانه مدیریت یکپارچه استودیو تبلیغاتی هورام</p>
         </div>
 
         {error && (

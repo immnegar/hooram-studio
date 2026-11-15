@@ -1,23 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 140" fill="none">
   <defs>
-    <linearGradient id="nexusGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#4F46E5" />
-      <stop offset="50%" stop-color="#6366F1" />
-      <stop offset="100%" stop-color="#38BDF8" />
+    <linearGradient id="m2-h-left" x1="15" y1="25" x2="60" y2="75" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#818CF8" />
+      <stop offset="100%" stop-color="#6366F1" />
     </linearGradient>
+    <linearGradient id="m2-h-right" x1="40" y1="25" x2="85" y2="75" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#0284C7" />
+    </linearGradient>
+    <linearGradient id="m2-h-lens" x1="50" y1="35" x2="50" y2="65" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="50%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+    <filter id="m2-h-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
   </defs>
-  <!-- Background circle/square for standalone favicon app icon -->
-  <rect width="512" height="512" rx="124" fill="#07090E" />
-  <rect x="14" y="14" width="484" height="484" rx="112" fill="none" stroke="rgba(99, 102, 241, 0.3)" stroke-width="4" />
-  <!-- Radiant Nexus Two Interlocking Arcs -->
-  <path
-    d="M 256 50 C 369.8 50, 462 142.2, 462 256 C 462 308.8 442.2 357.1 409.6 394 L 340 324.5 C 354.1 304.7 362.5 281.3 362.5 256 C 362.5 197.3 314.7 149.5 256 149.5 C 230.7 149.5 207.3 157.9 187.5 172 L 118 102.4 C 154.9 69.8 203.2 50 256 50 Z"
-    fill="url(#nexusGrad)"
-  />
-  <path
-    d="M 256 462 C 142.2 462, 50 369.8, 50 256 C 50 203.2 69.8 154.9 102.4 118 L 172 187.5 C 157.9 207.3 149.5 230.7 149.5 256 C 149.5 314.7 197.3 362.5 256 362.5 C 281.3 362.5 304.7 354.1 324.5 340 L 394 409.6 C 357.1 442.2 308.8 462 256 462 Z"
-    fill="url(#nexusGrad)"
-  />
-  <!-- Central optical light core -->
-  <circle cx="256" cy="256" r="28" fill="#38BDF8" />
+  
+  <g transform="translate(25, 20)">
+    <circle cx="38" cy="50" r="24" stroke="url(#m2-h-left)" stroke-width="5" stroke-linecap="round" />
+    <circle cx="62" cy="50" r="24" stroke="url(#m2-h-right)" stroke-width="5" stroke-linecap="round" />
+    <path d="M 50 35.5 C 56.5 42.5, 56.5 57.5, 50 64.5 C 43.5 57.5, 43.5 42.5, 50 35.5 Z" 
+          fill="url(#m2-h-lens)" filter="url(#m2-h-glow)" />
+    <circle cx="50" cy="50" r="3.2" fill="#FFFFFF" />
+  </g>
+
+  <line x1="140" y1="35" x2="140" y2="105" stroke="#1E293B" stroke-width="1.5" />
+
+  <g direction="ltr" style="direction: ltr; text-anchor: start;">
+    <text x="165" y="70" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="34" font-weight="800" letter-spacing="4" fill="#FFFFFF">HOORAM</text>
+    <text x="167" y="98" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600" letter-spacing="3" fill="#94A3B8">CINEMATIC ADVERTISING &amp; DIGITAL</text>
+  </g>
+
+  <g direction="rtl" style="direction: rtl; text-anchor: start;">
+    <text x="615" y="70" font-family="'Vazirmatn', system-ui, sans-serif" font-size="28" font-weight="800" fill="#F8FAFC">استودیو هورام</text>
+    <text x="615" y="96" font-family="'Vazirmatn', system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#64748B">تولید فیلم و تجربه دیجیتال</text>
+  </g>
 </svg>

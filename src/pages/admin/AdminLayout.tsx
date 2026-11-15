@@ -14,6 +14,7 @@ import {
   UserCheck 
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { LogoSymbol } from '../../components/common/LogoSymbol';
 
 export const AdminLayout: React.FC = () => {
   const { user, isAuthenticated, isLoading, logout } = useAuth();
@@ -59,12 +60,10 @@ export const AdminLayout: React.FC = () => {
       <aside className="hidden md:flex flex-col w-64 bg-studio-900 border-l border-slate-800 shrink-0 min-h-screen">
         {/* Brand header */}
         <div className="p-6 border-b border-slate-800 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
-            <Sparkles className="w-4 h-4" />
-          </div>
+          <LogoSymbol className="w-8 h-8 rounded-lg shadow-sm" />
           <div>
-            <h2 className="text-sm font-bold text-white font-vazir">پنل مدیریت هورام</h2>
-            <span className="text-[10px] text-slate-400 font-mono">ADMIN STUDIO v1.0</span>
+            <h2 className="text-sm font-bold text-white font-vazir">استودیو تبلیغاتی هورام</h2>
+            <span className="text-[10px] text-slate-400 font-mono">HOORAM ADMIN STUDIO</span>
           </div>
         </div>
 
@@ -112,8 +111,8 @@ export const AdminLayout: React.FC = () => {
       {/* Mobile Top Navbar */}
       <div className="md:hidden flex items-center justify-between p-4 bg-studio-900 border-b border-slate-800">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-indigo-400" />
-          <span className="text-sm font-bold text-white">پنل هورام</span>
+          <LogoSymbol className="w-6 h-6" />
+          <span className="text-sm font-bold text-white">پنل مدیریت هورام</span>
         </div>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

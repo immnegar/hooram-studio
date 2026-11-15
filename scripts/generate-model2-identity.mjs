@@ -1,0 +1,592 @@
+import fs from 'fs';
+import path from 'path';
+import { spawn } from 'child_process';
+
+const baseDir = path.resolve('public', 'brand-identity', 'model-2');
+const svgDir = path.join(baseDir, 'svg');
+const pngDir = path.join(baseDir, 'png');
+
+if (!fs.existsSync(baseDir)) fs.mkdirSync(baseDir, { recursive: true });
+if (!fs.existsSync(svgDir)) fs.mkdirSync(svgDir, { recursive: true });
+if (!fs.existsSync(pngDir)) fs.mkdirSync(pngDir, { recursive: true });
+
+// --- SVG DEFINITIONS ---
+
+// 1. Standalone Symbol (Color)
+const symbolColorSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="m2-grad-left" x1="15" y1="25" x2="60" y2="75" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#818CF8" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+    <linearGradient id="m2-grad-right" x1="40" y1="25" x2="85" y2="75" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#0284C7" />
+    </linearGradient>
+    <linearGradient id="m2-grad-lens" x1="50" y1="35" x2="50" y2="65" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="50%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+    <filter id="m2-core-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <!-- Left Ring: First 'O' of HOORAM / Sun Origin -->
+  <circle cx="38" cy="50" r="24" stroke="url(#m2-grad-left)" stroke-width="5" stroke-linecap="round" />
+  <!-- Right Ring: Second 'O' of HOORAM / Cinema Lens & Infinity -->
+  <circle cx="62" cy="50" r="24" stroke="url(#m2-grad-right)" stroke-width="5" stroke-linecap="round" />
+  <!-- Overlapping Radiant Lens (Vesica Piscis) -->
+  <path d="M 50 35.5 C 56.5 42.5, 56.5 57.5, 50 64.5 C 43.5 57.5, 43.5 42.5, 50 35.5 Z" 
+        fill="url(#m2-grad-lens)" filter="url(#m2-core-glow)" />
+  <!-- Pure Brilliant Sparkle Core -->
+  <circle cx="50" cy="50" r="3.2" fill="#FFFFFF" />
+</svg>`;
+
+// 2. Standalone Symbol (Monochrome Black)
+const symbolBlackSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Left Ring -->
+  <circle cx="38" cy="50" r="24" stroke="#000000" stroke-width="5.5" stroke-linecap="round" />
+  <!-- Right Ring -->
+  <circle cx="62" cy="50" r="24" stroke="#000000" stroke-width="5.5" stroke-linecap="round" />
+  <!-- Overlapping Lens -->
+  <path d="M 50 35.5 C 56.5 42.5, 56.5 57.5, 50 64.5 C 43.5 57.5, 43.5 42.5, 50 35.5 Z" fill="#000000" />
+  <!-- Center Core Cutout -->
+  <circle cx="50" cy="50" r="2.8" fill="#FFFFFF" />
+</svg>`;
+
+// 3. Standalone Symbol (Monochrome White)
+const symbolWhiteSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Left Ring -->
+  <circle cx="38" cy="50" r="24" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round" />
+  <!-- Right Ring -->
+  <circle cx="62" cy="50" r="24" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round" />
+  <!-- Overlapping Lens -->
+  <path d="M 50 35.5 C 56.5 42.5, 56.5 57.5, 50 64.5 C 43.5 57.5, 43.5 42.5, 50 35.5 Z" fill="#FFFFFF" />
+  <!-- Center Core Cutout -->
+  <circle cx="50" cy="50" r="2.8" fill="#07090E" />
+</svg>`;
+
+// 4. Horizontal Lockup Dark (640 x 140)
+const horizontalDarkSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 140" fill="none" style="width: 100%; height: auto;">
+  <defs>
+    <linearGradient id="m2-h-left" x1="15" y1="25" x2="60" y2="75" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#818CF8" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+    <linearGradient id="m2-h-right" x1="40" y1="25" x2="85" y2="75" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#0284C7" />
+    </linearGradient>
+    <linearGradient id="m2-h-lens" x1="50" y1="35" x2="50" y2="65" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="50%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+    <filter id="m2-h-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Symbol -->
+  <g transform="translate(25, 20)">
+    <circle cx="38" cy="50" r="24" stroke="url(#m2-h-left)" stroke-width="5" stroke-linecap="round" />
+    <circle cx="62" cy="50" r="24" stroke="url(#m2-h-right)" stroke-width="5" stroke-linecap="round" />
+    <path d="M 50 35.5 C 56.5 42.5, 56.5 57.5, 50 64.5 C 43.5 57.5, 43.5 42.5, 50 35.5 Z" 
+          fill="url(#m2-h-lens)" filter="url(#m2-h-glow)" />
+    <circle cx="50" cy="50" r="3.2" fill="#FFFFFF" />
+  </g>
+
+  <!-- Divider Line -->
+  <line x1="140" y1="35" x2="140" y2="105" stroke="#1E293B" stroke-width="1.5" />
+
+  <!-- English & Descriptor (LTR) -->
+  <g direction="ltr" style="direction: ltr; text-anchor: start;">
+    <text x="165" y="70" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="34" font-weight="800" letter-spacing="4" fill="#FFFFFF">HOORAM</text>
+    <text x="167" y="98" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600" letter-spacing="3" fill="#94A3B8">CINEMATIC ADVERTISING &amp; DIGITAL</text>
+  </g>
+
+  <!-- Persian Brand (RTL) -->
+  <g direction="rtl" style="direction: rtl; text-anchor: start;">
+    <text x="615" y="70" font-family="'Vazirmatn', system-ui, sans-serif" font-size="28" font-weight="800" fill="#F8FAFC">استودیو هورام</text>
+    <text x="615" y="96" font-family="'Vazirmatn', system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#64748B">تولید فیلم و تجربه دیجیتال</text>
+  </g>
+</svg>`;
+
+// 5. Horizontal Lockup Light (640 x 140)
+const horizontalLightSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 140" fill="none" style="width: 100%; height: auto;">
+  <g transform="translate(25, 20)">
+    <circle cx="38" cy="50" r="24" stroke="#4F46E5" stroke-width="5" stroke-linecap="round" />
+    <circle cx="62" cy="50" r="24" stroke="#0284C7" stroke-width="5" stroke-linecap="round" />
+    <path d="M 50 35.5 C 56.5 42.5, 56.5 57.5, 50 64.5 C 43.5 57.5, 43.5 42.5, 50 35.5 Z" fill="#0284C7" />
+    <circle cx="50" cy="50" r="3" fill="#FFFFFF" />
+  </g>
+
+  <line x1="140" y1="35" x2="140" y2="105" stroke="#E2E8F0" stroke-width="1.5" />
+
+  <g direction="ltr" style="direction: ltr; text-anchor: start;">
+    <text x="165" y="70" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="34" font-weight="800" letter-spacing="4" fill="#0F172A">HOORAM</text>
+    <text x="167" y="98" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="600" letter-spacing="3" fill="#64748B">CINEMATIC ADVERTISING &amp; DIGITAL</text>
+  </g>
+
+  <g direction="rtl" style="direction: rtl; text-anchor: start;">
+    <text x="615" y="70" font-family="'Vazirmatn', system-ui, sans-serif" font-size="28" font-weight="800" fill="#0F172A">استودیو هورام</text>
+    <text x="615" y="96" font-family="'Vazirmatn', system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#94A3B8">تولید فیلم و تجربه دیجیتال</text>
+  </g>
+</svg>`;
+
+// 6. Vertical Stack Lockup (320 x 360)
+const verticalDarkSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 360" fill="none">
+  <defs>
+    <linearGradient id="m2-v-left" x1="15" y1="25" x2="60" y2="75" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#818CF8" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+    <linearGradient id="m2-v-right" x1="40" y1="25" x2="85" y2="75" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#0284C7" />
+    </linearGradient>
+    <linearGradient id="m2-v-lens" x1="50" y1="35" x2="50" y2="65" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="50%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+    <filter id="m2-v-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Large Centered Symbol -->
+  <g transform="translate(100, 35) scale(1.2)">
+    <circle cx="38" cy="50" r="24" stroke="url(#m2-v-left)" stroke-width="5" stroke-linecap="round" />
+    <circle cx="62" cy="50" r="24" stroke="url(#m2-v-right)" stroke-width="5" stroke-linecap="round" />
+    <path d="M 50 35.5 C 56.5 42.5, 56.5 57.5, 50 64.5 C 43.5 57.5, 43.5 42.5, 50 35.5 Z" 
+          fill="url(#m2-v-lens)" filter="url(#m2-v-glow)" />
+    <circle cx="50" cy="50" r="3.2" fill="#FFFFFF" />
+  </g>
+
+  <!-- Centered Typography -->
+  <text x="160" y="210" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="36" font-weight="800" letter-spacing="6" fill="#FFFFFF">HOORAM</text>
+  <text x="160" y="255" text-anchor="middle" font-family="'Vazirmatn', system-ui, sans-serif" font-size="26" font-weight="700" fill="#F1F5F9">استودیو تبلیغاتی هورام</text>
+  <text x="160" y="295" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" letter-spacing="3.5" fill="#94A3B8">CINEMATIC FILM &amp; DIGITAL CRAFT</text>
+</svg>`;
+
+// Save all SVGs
+fs.writeFileSync(path.join(svgDir, 'hooram-model2-symbol.svg'), symbolColorSvg);
+fs.writeFileSync(path.join(svgDir, 'hooram-model2-symbol-black.svg'), symbolBlackSvg);
+fs.writeFileSync(path.join(svgDir, 'hooram-model2-symbol-white.svg'), symbolWhiteSvg);
+fs.writeFileSync(path.join(svgDir, 'hooram-model2-horizontal-dark.svg'), horizontalDarkSvg);
+fs.writeFileSync(path.join(svgDir, 'hooram-model2-horizontal-light.svg'), horizontalLightSvg);
+fs.writeFileSync(path.join(svgDir, 'hooram-model2-vertical-dark.svg'), verticalDarkSvg);
+console.log('Saved all Model 2 SVG files.');
+
+// Generate Comprehensive Showcase HTML
+const showcaseHtml = `<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>HOORAM STUDIO — Model 2 (Double-O Infinisun) Official Design Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Vazirmatn:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #07090E;
+      color: #F8FAFC;
+      font-family: 'Vazirmatn', sans-serif;
+      padding: 40px 30px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      border-bottom: 1px solid #1E293B;
+      padding-bottom: 30px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 9999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #38BDF8;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      margin-bottom: 14px;
+      letter-spacing: 0.15em;
+    }
+    .title {
+      font-size: 30px;
+      font-weight: 900;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #94A3B8;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
+    .card {
+      background: #0B0F19;
+      border: 1px solid #1E293B;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 15px 35px -10px rgba(0,0,0,0.5);
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background: #6366F1;
+      border-radius: 2px;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: #94A3B8;
+      margin-bottom: 20px;
+    }
+    .hero-stage {
+      background: radial-gradient(circle at center, rgba(99, 102, 241, 0.12) 0%, rgba(7, 9, 14, 0.8) 75%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .hero-symbol {
+      width: 170px;
+      height: 170px;
+      filter: drop-shadow(0 15px 30px rgba(99, 102, 241, 0.35));
+    }
+    .horizontal-lockup-preview {
+      background: #07090E;
+      border: 1px solid #1E293B;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .applications-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .app-box {
+      background: #07090E;
+      border: 1px solid #1E293B;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 10px;
+    }
+    .app-box-light {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      color: #0F172A;
+    }
+    .app-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #94A3B8;
+    }
+    .app-box-light .app-label {
+      color: #64748B;
+    }
+    .header-mockup {
+      background: rgba(11, 15, 25, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+      box-shadow: 0 10px 25px -10px rgba(0,0,0,0.6);
+    }
+    .google-search-mockup {
+      background: #202124;
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 16px;
+      border: 1px solid #3c4043;
+    }
+    .google-domain-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .google-favicon-box {
+      width: 28px;
+      height: 28px;
+      background: #07090E;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #3c4043;
+      padding: 4px;
+    }
+    .google-site-name {
+      font-size: 13px;
+      color: #dadce0;
+      font-family: sans-serif;
+    }
+    .google-site-url {
+      font-size: 11px;
+      color: #bdc1c6;
+      font-family: sans-serif;
+    }
+    .google-title {
+      font-size: 17px;
+      color: #8ab4f8;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .google-snippet {
+      font-size: 12.5px;
+      color: #bdc1c6;
+      line-height: 1.5;
+    }
+    .concept-points {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+      color: #CBD5E1;
+    }
+    .concept-points li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .point-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #38BDF8;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+    .footer-actions {
+      background: #0B0F19;
+      border: 1px solid #1E293B;
+      border-radius: 20px;
+      padding: 24px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+    }
+    .action-badge {
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid #6366F1;
+      color: #818CF8;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="badge">HOORAM STUDIO — BRAND IDENTITY MODEL 2</div>
+      <h1 class="title">مدل شماره ۲: اینفینی‌سان (DOUBLE-O INFINISUN)</h1>
+      <p class="subtitle">
+        طراحی‌شده بر پایه امضای آوایی و بصری نام استودیو: دو حرف <strong>OO</strong> در کلمه H<strong>OO</strong>RAM 
+        که با تلاقی دو چشمه نور، لنز اپتیکال سینما و نشان ابدیت هورام را پدید می‌آورند.
+      </p>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="main-grid">
+
+      <!-- Left Column: Primary Visuals -->
+      <div class="card">
+        <h3 class="card-title">۱. نشان اصلی نماد (Hero Symbol)</h3>
+        <p class="card-desc">هندسه خالص دو حلقه متداخل نور با هسته کانون درخشش سایان و سفید</p>
+        
+        <div class="hero-stage">
+          <div class="hero-symbol">
+            ${symbolColorSvg}
+          </div>
+        </div>
+
+        <h3 class="card-title">۲. ترکیب افقی رسمی لوگو (Official Horizontal Lockup)</h3>
+        <p class="card-desc">چیدمان رسمی با حروف‌نگاری کالیبره‌شده لاتین HOORAM و خط متوازن فارسی هورام</p>
+        
+        <div class="horizontal-lockup-preview">
+          ${horizontalDarkSvg}
+        </div>
+
+        <h3 class="card-title">۳. نسخه‌های متنوع و کاربردی (Icon Variations)</h3>
+        <p class="card-desc">عملکرد بدون نقص در ابعاد فاوآیکون، پس‌زمینه روشن و تک‌رنگ مونوکروم</p>
+        
+        <div class="applications-grid">
+          <!-- Favicon 48px -->
+          <div class="app-box">
+            <div style="width: 48px; height: 48px; background: #07090E; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 4px; display: flex; align-items: center; justify-content: center;">
+              ${symbolColorSvg}
+            </div>
+            <span class="app-label">Favicon 48px (گوگل)</span>
+          </div>
+
+          <!-- App Icon 64px -->
+          <div class="app-box">
+            <div style="width: 58px; height: 58px; background: linear-gradient(135deg, #0F172A 0%, #07090E 100%); border: 1px solid #1E293B; border-radius: 16px; padding: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+              ${symbolColorSvg}
+            </div>
+            <span class="app-label">App Icon / آواتار</span>
+          </div>
+
+          <!-- Monochrome Black -->
+          <div class="app-box app-box-light">
+            <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;">
+              ${symbolBlackSvg}
+            </div>
+            <span class="app-label">مونوکروم مشکی</span>
+          </div>
+
+          <!-- Monochrome White -->
+          <div class="app-box">
+            <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;">
+              ${symbolWhiteSvg}
+            </div>
+            <span class="app-label">مونوکروم سفید</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Real-World In-Context Applications -->
+      <div class="card">
+        <h3 class="card-title">۴. فلسفه معماری و چرایی برتری مدل ۲</h3>
+        <p class="card-desc">چرا مدل اینفینی‌سان بالاترین امتیاز برندینگ را دارد؟</p>
+
+        <ul class="concept-points">
+          <li>
+            <div class="point-dot"></div>
+            <div>
+              <strong>پیوند اختصاصی با نام برند (H-OO-RAM):</strong> این نشان فرمیک مستقیماً از دو حرف OO نام استودیو الهام گرفته و تنها متعلق به این برند است.
+            </div>
+          </li>
+          <li>
+            <div class="point-dot"></div>
+            <div>
+              <strong>وضوح بی‌رقیب در سایزهای کوچک (Extreme Legibility):</strong> بر خلاف نشان‌های پیچیده و شلوغ، دو حلقه هندسی حتی در اندازه ۱۶ پیکسل و ۴۸ پیکسل در نتایج سرچ گوگل فوراً تفکیک می‌شوند.
+            </div>
+          </li>
+          <li>
+            <div class="point-dot"></div>
+            <div>
+              <strong>تلاقی نور و سینما (Lens & Infinity):</strong> اشتراک دو دایره یک لنز متقارن (Vesica Piscis) و کادر متمرکز نور پدید می‌آورد که معرف هنر لنز و دوربین سینمایی است.
+            </div>
+          </li>
+        </ul>
+
+        <div style="margin-top: 28px;">
+          <h3 class="card-title">۵. شبیه‌سازی در هدر سایت</h3>
+          <p class="card-desc">نمای واقعی لوگو در نوبار شناور شیشه‌ای سایت هورام</p>
+          
+          <div class="header-mockup">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 36px; height: 36px;">
+                ${symbolColorSvg}
+              </div>
+              <div style="display: flex; flex-direction: column;">
+                <span style="font-size: 13px; font-weight: 700; color: #FFFFFF;">استودیو تبلیغاتی هورام</span>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.18em; color: #94A3B8;">HOORAM STUDIO</span>
+              </div>
+            </div>
+            <div style="font-size: 11px; color: #94A3B8; display: flex; gap: 12px;">
+              <span>خانه</span>
+              <span style="color: #6366F1; font-weight: 600;">نمونه‌کارها</span>
+              <span>تماس</span>
+            </div>
+            <div style="background: #6366F1; color: #fff; font-size: 10px; font-weight: 600; padding: 5px 12px; border-radius: 9999px;">
+              ثبت پروژه
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 28px;">
+          <h3 class="card-title">۶. شبیه‌سازی در نتیجه جستجوی گوگل</h3>
+          <p class="card-desc">جایگزینی آیکون خاکستری کره زمین با فاوآیکون درخشان هورام</p>
+          
+          <div class="google-search-mockup">
+            <div class="google-domain-row">
+              <div class="google-favicon-box">
+                ${symbolColorSvg}
+              </div>
+              <div>
+                <div class="google-site-name">hooramstudio.ir</div>
+                <div class="google-site-url">https://hooramstudio.ir</div>
+              </div>
+            </div>
+            <div class="google-title">استودیو تبلیغاتی هورام | تولید فیلم‌های تبلیغاتی هوش مصنوعی و سینمایی</div>
+            <div class="google-snippet">استودیو خلاق هورام؛ خلق تیزرهای تبلیغاتی سینمایی با هوش مصنوعی، طراحی و توسعه وب‌سایت‌های مدرن و کمپین‌های ۳۶۰ درجه برای برندهای پیشرو در ایران.</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bottom Actions / Next Step -->
+    <div class="footer-actions">
+      <div>
+        <h4 style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin-bottom: 4px;">وضعیت استقرار: در انتظار تایید شما</h4>
+        <p style="font-size: 13px; color: #94A3B8;">
+          فایل‌های وکتور و طراحی کامل مدل ۲ آماده شده‌اند. به محض اینکه در پاسخ بنویسید «تایید است»، این لوگو در تمام سایت، هدر، فوتر، فاوآیکون گوگل و پنل ادمین جایگزین و لایو خواهد شد.
+        </p>
+      </div>
+      <div class="action-badge">آماده پیاده‌سازی سراسری</div>
+    </div>
+  </div>
+
+</body>
+</html>
+`;
+
+const showcasePath = path.join(baseDir, 'showcase.html');
+fs.writeFileSync(showcasePath, showcaseHtml);
+console.log('Saved showcase HTML:', showcasePath);
