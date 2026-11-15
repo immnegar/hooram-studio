@@ -66,3 +66,4 @@ export const Reveal: React.FC<RevealProps> = ({
     </Component>
   );
 };
+

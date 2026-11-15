@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Film, Menu, X, ArrowUpLeft, Phone } from 'lucide-react';
+import { Menu, X, ArrowUpLeft, Phone } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { InstagramIcon, LinkedinIcon, TelegramIcon } from '../ui/SocialIcons';
+import { LogoSymbol } from '../common/LogoSymbol';
 import { api } from '../../services/api';
 import { StudioSettings } from '../../types';
 
@@ -104,11 +105,7 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center justify-between">
             {/* Logo & Brand */}
             <Link to="/" onClick={handleLogoClick} className="flex items-center gap-2.5 sm:gap-3 group">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-indigo-600 to-cyan-400 p-[1px] shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow">
-                <div className="w-full h-full bg-studio-950 rounded-[11px] flex items-center justify-center">
-                  <Film className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400 group-hover:scale-110 transition-transform duration-300" />
-                </div>
-              </div>
+              <LogoSymbol className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl group-hover:scale-105 transition-transform duration-300 shadow-lg shadow-indigo-500/20" />
               <div className="flex flex-col">
                 <span className="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-1.5 font-vazir">
                   استودیو تبلیغاتی هورام
@@ -190,11 +187,7 @@ export const Navbar: React.FC = () => {
           {/* 1. Header and Brand Signature */}
           <div className="relative z-10 px-6 sm:px-8 pt-1 pb-5 border-b border-white/[0.06] flex items-center justify-between">
             <Link to="/" onClick={handleLogoClick} className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-indigo-600 to-cyan-400 p-[1px] shadow-lg shadow-indigo-500/20">
-                <div className="w-full h-full bg-studio-950 rounded-[11px] flex items-center justify-center">
-                  <Film className="w-5 h-5 text-indigo-400" />
-                </div>
-              </div>
+              <LogoSymbol className="w-10 h-10 rounded-xl shadow-lg shadow-indigo-500/20" />
               <div className="flex flex-col text-right">
                 <span className="text-base sm:text-lg font-bold tracking-tight text-white font-vazir leading-tight">
                   استودیو تبلیغاتی هورام

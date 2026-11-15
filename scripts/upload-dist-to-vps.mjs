@@ -31,9 +31,11 @@ conn.on('ready', () => {
           'favicon.ico',
           'favicon-48x48.png',
           'favicon-96x96.png',
+          'favicon-144x144.png',
           'favicon-192x192.png',
           'favicon-512x512.png',
           'apple-touch-icon.png',
+          'logo.png',
         ];
 
         for (const file of distRootFiles) {
@@ -42,6 +44,16 @@ conn.on('ready', () => {
             await uploadFile(local, `/var/www/hooram-studio/dist/${file}`);
             // Also copy to public/
             await uploadFile(local, `/var/www/hooram-studio/public/${file}`);
+          }
+        }
+
+        // Upload images/logo files
+        const imageFiles = ['logo.png', 'logo-512.png', 'logo.svg', 'logo-symbol.svg'];
+        for (const file of imageFiles) {
+          const local = path.join(process.cwd(), 'dist', 'images', file);
+          if (fs.existsSync(local)) {
+            await uploadFile(local, `/var/www/hooram-studio/dist/images/${file}`);
+            await uploadFile(local, `/var/www/hooram-studio/public/images/${file}`);
           }
         }
 

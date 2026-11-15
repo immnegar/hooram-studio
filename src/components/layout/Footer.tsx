@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Film, Phone, Mail, Clock, ArrowUpLeft } from 'lucide-react';
+import { Phone, Mail, Clock, ArrowUpLeft } from 'lucide-react';
 import { InstagramIcon, LinkedinIcon, TelegramIcon } from '../ui/SocialIcons';
+import { LogoSymbol } from '../common/LogoSymbol';
 import { api } from '../../services/api';
 import { StudioSettings } from '../../types';
 
@@ -39,11 +40,7 @@ export const Footer: React.FC = () => {
           {/* Col 1 & 2: Brand Statement */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-indigo-600 p-[1px]">
-                <div className="w-full h-full bg-studio-950 rounded-[11px] flex items-center justify-center">
-                  <Film className="w-4 h-4 text-indigo-400" />
-                </div>
-              </div>
+              <LogoSymbol className="w-9 h-9 rounded-xl shadow-md shadow-indigo-500/20" />
               <span className="text-xl font-bold text-white font-vazir">استودیو تبلیغاتی هورام</span>
             </div>
             <p className="text-sm leading-relaxed text-slate-300 max-w-sm">
