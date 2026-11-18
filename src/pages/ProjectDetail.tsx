@@ -219,6 +219,20 @@ export const ProjectDetail: React.FC = () => {
         {/* Gallery Thumbnails */}
         {project.gallery && project.gallery.length > 1 && (
           <div className="p-4 bg-studio-900/70 border-t border-slate-800 flex items-center gap-3 overflow-x-auto">
+            {project.videoPreviewUrl && (
+              <button
+                onClick={() => setIsPlayingVideo(true)}
+                className={`w-20 h-14 rounded-lg overflow-hidden shrink-0 border-2 transition-all flex flex-col items-center justify-center bg-indigo-950/60 text-indigo-300 gap-1 ${
+                  isPlayingVideo
+                    ? 'border-indigo-500 scale-105 bg-indigo-900/80 text-white'
+                    : 'border-slate-800 opacity-60 hover:opacity-100'
+                }`}
+                title="پخش ویدیو"
+              >
+                <Play className="w-4 h-4 fill-current" />
+                <span className="text-[9px] font-bold">ویدیو</span>
+              </button>
+            )}
             {project.gallery.map((img, idx) => (
               <button
                 key={idx}

@@ -13,7 +13,9 @@ import {
   RotateCw,
   Check,
   Loader2,
-  Film
+  Film,
+  Image as ImageIcon,
+  Upload
 } from 'lucide-react';
 import { api } from '../../services/api';
 import { PortfolioItem } from '../../types';
@@ -34,11 +36,16 @@ export const AdminPortfolio: React.FC = () => {
   const [isPlayingPreview, setIsPlayingPreview] = useState(false);
   const [extractSuccessMsg, setExtractSuccessMsg] = useState<string | null>(null);
 
+  // Gallery manual URL input state
+  const [newGalleryUrl, setNewGalleryUrl] = useState('');
+  const [uploadingGalleryImg, setUploadingGalleryImg] = useState(false);
+
   const [formData, setFormData] = useState({
     title: '',
     englishTitle: '',
     category: 'فیلم‌های تبلیغاتی',
     coverImage: '',
+    gallery: [] as string[],
     videoPreviewUrl: '',
     client: '',
     year: '۱۴۰۳',
@@ -101,7 +108,7 @@ export const AdminPortfolio: React.FC = () => {
     }
   };
 
-  const handleCaptureFrame = async () => {
+  const handleCaptureFrame = async (target: 'cover' | 'gallery' = 'cover') => {
     const video = videoExtractRef.current;
     if (!video) return;
 
@@ -129,17 +136,41 @@ export const AdminPortfolio: React.FC = () => {
           return;
         }
 
-        const file = new File([blob], `cover_frame_${Date.now()}.jpg`, { type: 'image/jpeg' });
+        const file = new File([blob], `frame_${target}_${Date.now()}.jpg`, { type: 'image/jpeg' });
         try {
           const res = await api.uploadMedia(file);
-          setFormData(prev => ({ ...prev, coverImage: res.url }));
-          setExtractSuccessMsg(`فریم با موفقیت در ثانیه ${video.currentTime.toFixed(1)} استخراج و ذخیره شد.`);
+          if (target === 'cover') {
+            setFormData(prev => ({
+              ...prev,
+              coverImage: res.url,
+              gallery: prev.gallery.includes(res.url) ? prev.gallery : [res.url, ...prev.gallery]
+            }));
+            setExtractSuccessMsg(`فریم در ثانیه ${video.currentTime.toFixed(1)} به عنوان کاور اصلی تنظیم شد.`);
+          } else {
+            setFormData(prev => ({
+              ...prev,
+              gallery: [...prev.gallery, res.url]
+            }));
+            setExtractSuccessMsg(`فریم در ثانیه ${video.currentTime.toFixed(1)} به گالری تصاویر اضافه شد.`);
+          }
           setTimeout(() => setExtractSuccessMsg(null), 4000);
         } catch (uploadErr) {
           // Fallback to dataUrl
           const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
-          setFormData(prev => ({ ...prev, coverImage: dataUrl }));
-          setExtractSuccessMsg(`فریم استخراج شد و جایگزین کاور گردید.`);
+          if (target === 'cover') {
+            setFormData(prev => ({
+              ...prev,
+              coverImage: dataUrl,
+              gallery: prev.gallery.includes(dataUrl) ? prev.gallery : [dataUrl, ...prev.gallery]
+            }));
+            setExtractSuccessMsg(`فریم استخراج شد و جایگزین کاور گردید.`);
+          } else {
+            setFormData(prev => ({
+              ...prev,
+              gallery: [...prev.gallery, dataUrl]
+            }));
+            setExtractSuccessMsg(`فریم به گالری تصاویر پروژه افزوده شد.`);
+          }
           setTimeout(() => setExtractSuccessMsg(null), 4000);
         } finally {
           setExtractingFrame(false);
@@ -149,6 +180,47 @@ export const AdminPortfolio: React.FC = () => {
       console.error('Frame capture failed:', err);
       alert(err.message || 'خطا در استخراج فریم از ویدیو.');
       setExtractingFrame(false);
+    }
+  };
+
+  const handleAddGalleryUrl = () => {
+    if (!newGalleryUrl.trim()) return;
+    setFormData(prev => ({
+      ...prev,
+      gallery: [...prev.gallery, newGalleryUrl.trim()]
+    }));
+    setNewGalleryUrl('');
+  };
+
+  const handleRemoveGalleryImage = (indexToRemove: number) => {
+    setFormData(prev => ({
+      ...prev,
+      gallery: prev.gallery.filter((_, idx) => idx !== indexToRemove)
+    }));
+  };
+
+  const handleSetAsCover = (url: string) => {
+    setFormData(prev => ({
+      ...prev,
+      coverImage: url
+    }));
+  };
+
+  const handleUploadGalleryImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingGalleryImg(true);
+    try {
+      const res = await api.uploadMedia(file);
+      setFormData(prev => ({
+        ...prev,
+        gallery: [...prev.gallery, res.url]
+      }));
+    } catch (err: any) {
+      alert('خطا در بارگذاری تصویر به گالری: ' + (err.message || err));
+    } finally {
+      setUploadingGalleryImg(false);
+      e.target.value = '';
     }
   };
 
@@ -178,6 +250,7 @@ export const AdminPortfolio: React.FC = () => {
       englishTitle: '',
       category: 'فیلم‌های تبلیغاتی',
       coverImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
+      gallery: [],
       videoPreviewUrl: '/videos/hero-showreel.mp4',
       client: 'کانسپت استودیو',
       year: '۱۴۰۳',
@@ -197,9 +270,10 @@ export const AdminPortfolio: React.FC = () => {
       englishTitle: p.englishTitle || '',
       category: p.category,
       coverImage: p.coverImage,
+      gallery: Array.isArray(p.gallery) ? p.gallery : (p.coverImage ? [p.coverImage] : []),
       videoPreviewUrl: p.videoPreviewUrl || '',
       client: p.client,
-      year: p.year,
+      year: p.year || '۱۴۰۳',
       duration: p.duration || '',
       summary: p.summary,
       challenge: p.challenge || '',
@@ -237,6 +311,7 @@ export const AdminPortfolio: React.FC = () => {
       category: formData.category,
       categoryFa: formData.category,
       coverImage: formData.coverImage,
+      gallery: formData.gallery,
       videoPreviewUrl: formData.videoPreviewUrl,
       client: formData.client,
       year: formData.year,
@@ -320,7 +395,14 @@ export const AdminPortfolio: React.FC = () => {
                 <div className="p-4 space-y-2">
                   <div className="text-[11px] text-slate-400 flex items-center justify-between">
                     <span>{project.client}</span>
-                    <span>سال {project.year}</span>
+                    <div className="flex items-center gap-2">
+                      {project.duration && (
+                        <span className="text-cyan-400 font-mono text-[10px] bg-cyan-950/60 border border-cyan-800/40 px-1.5 py-0.5 rounded">
+                          {project.duration}
+                        </span>
+                      )}
+                      <span>سال {project.year}</span>
+                    </div>
                   </div>
                   <h4 className="text-sm font-bold text-white line-clamp-1">{project.title}</h4>
                   <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
@@ -573,25 +655,36 @@ export const AdminPortfolio: React.FC = () => {
                         </button>
                       </div>
 
-                      {/* Main Capture Frame Button */}
-                      <button
-                        type="button"
-                        disabled={extractingFrame}
-                        onClick={handleCaptureFrame}
-                        className="w-full mt-2 py-2.5 px-3 rounded-xl bg-gradient-to-r from-cyan-500 via-indigo-600 to-indigo-700 hover:from-cyan-400 hover:to-indigo-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/25 transition-all disabled:opacity-50"
-                      >
-                        {extractingFrame ? (
-                          <>
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                            <span>در حال استخراج و ذخیره فریم...</span>
-                          </>
-                        ) : (
-                          <>
-                            <Camera className="w-4 h-4" />
-                            <span>استخراج این فریم به عنوان کاور</span>
-                          </>
-                        )}
-                      </button>
+                      {/* Capture Frame Action Buttons */}
+                      <div className="grid grid-cols-2 gap-2 mt-2">
+                        <button
+                          type="button"
+                          disabled={extractingFrame}
+                          onClick={() => handleCaptureFrame('cover')}
+                          className="py-2 px-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold text-[11px] flex items-center justify-center gap-1.5 shadow-md shadow-indigo-500/20 transition-all disabled:opacity-50"
+                        >
+                          {extractingFrame ? (
+                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          ) : (
+                            <Camera className="w-3.5 h-3.5" />
+                          )}
+                          <span>تنظیم به عنوان کاور</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          disabled={extractingFrame}
+                          onClick={() => handleCaptureFrame('gallery')}
+                          className="py-2 px-2.5 rounded-xl bg-studio-900 hover:bg-studio-800 border border-slate-700 hover:border-slate-600 text-slate-200 font-bold text-[11px] flex items-center justify-center gap-1.5 transition-all disabled:opacity-50"
+                        >
+                          {extractingFrame ? (
+                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          ) : (
+                            <Plus className="w-3.5 h-3.5 text-cyan-400" />
+                          )}
+                          <span>افزودن به گالری</span>
+                        </button>
+                      </div>
 
                       {extractSuccessMsg && (
                         <div className="flex items-center gap-1.5 text-[11px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-2 animate-fadeIn">
@@ -606,10 +699,135 @@ export const AdminPortfolio: React.FC = () => {
                 <div className="p-3.5 rounded-xl bg-studio-950/40 border border-slate-800/80 text-[11px] text-slate-400 flex items-center gap-2.5">
                   <Film className="w-4 h-4 text-slate-500 shrink-0" />
                   <span>
-                    💡 <strong className="text-slate-300">قابلیت استخراج فریم:</strong> با بارگذاری یا وارد کردن لینک ویدیوی تیزر پروژه، پنل پخش‌کننده و اسکرابر فعال می‌شود و می‌توانید هر ثانیه یا فریم دلخواه را با یک کلیک به عنوان تصویر کاور اصلی استخراج نمایید.
+                    💡 <strong className="text-slate-300">قابلیت استخراج فریم:</strong> با بارگذاری یا وارد کردن لینک ویدیوی تیزر پروژه، پنل پخش‌کننده و اسکرابر فعال می‌شود و می‌توانید هر ثانیه یا فریم دلخواه را با یک کلیک به عنوان تصویر کاور اصلی یا گالری استخراج نمایید.
                   </span>
                 </div>
               )}
+
+              {/* Gallery Images Management Section */}
+              <div className="p-4 rounded-2xl bg-studio-950/60 border border-slate-800 space-y-3">
+                <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                  <div className="flex items-center gap-2 text-slate-200 font-bold text-xs">
+                    <ImageIcon className="w-4 h-4 text-cyan-400" />
+                    <span>گالری فریم‌ها و تصاویر پروژه</span>
+                    <span className="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded-full font-mono">
+                      {formData.gallery.length} تصویر
+                    </span>
+                  </div>
+                  {formData.gallery.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setFormData(prev => ({ ...prev, gallery: [] }))}
+                      className="text-[10px] text-rose-400 hover:underline flex items-center gap-1"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                      پاکسازی کل گالری
+                    </button>
+                  )}
+                </div>
+
+                <p className="text-[11px] text-slate-400 leading-relaxed">
+                  تصاویر این بخش به عنوان فریم‌های نمونه کار در پایین پلیر ویدیو در صفحه پروژه نمایش داده می‌شوند. در صورتی که این بخش خالی باشد یا فقط ۱ عکس داشته باشد، نوار تصاویر اضافی در سایت نمایش داده نمی‌شود.
+                </p>
+
+                {/* Thumbnails grid */}
+                {formData.gallery.length > 0 ? (
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+                    {formData.gallery.map((imgUrl, idx) => {
+                      const isCover = formData.coverImage === imgUrl;
+                      return (
+                        <div
+                          key={idx}
+                          className={`relative group rounded-xl overflow-hidden border-2 aspect-video bg-black/60 transition-all ${
+                            isCover ? 'border-cyan-500 shadow-md shadow-cyan-500/20' : 'border-slate-800 hover:border-slate-700'
+                          }`}
+                        >
+                          <img
+                            src={imgUrl}
+                            alt={`گالری ${idx + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                          {isCover && (
+                            <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded bg-cyan-500 text-studio-950 font-bold text-[9px] shadow">
+                              کاور اصلی
+                            </span>
+                          )}
+
+                          <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-1">
+                            {!isCover && (
+                              <button
+                                type="button"
+                                onClick={() => handleSetAsCover(imgUrl)}
+                                className="px-2 py-1 rounded bg-cyan-600 hover:bg-cyan-500 text-white text-[10px] font-medium"
+                                title="انتخاب به عنوان کاور"
+                              >
+                                کاور
+                              </button>
+                            )}
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveGalleryImage(idx)}
+                              className="p-1 rounded bg-rose-600 hover:bg-rose-500 text-white"
+                              title="حذف از گالری"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="p-3 rounded-xl bg-studio-900/40 border border-dashed border-slate-800 text-center text-slate-500 text-[11px]">
+                    هیچ تصویری در گالری ثبت نشده است. می‌توانید از بخش استخراج فریم ویدیو در بالا یا دکمه‌های زیر فریم اضافه نمایید.
+                  </div>
+                )}
+
+                {/* Add to Gallery Inputs */}
+                <div className="flex flex-col sm:flex-row items-center gap-2 pt-2 border-t border-slate-800/60">
+                  <div className="relative flex-1 w-full">
+                    <input
+                      type="text"
+                      dir="ltr"
+                      value={newGalleryUrl}
+                      onChange={(e) => setNewGalleryUrl(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          handleAddGalleryUrl();
+                        }
+                      }}
+                      placeholder="لینک مستقیم تصویر (https://... یا /uploads/...)"
+                      className="w-full bg-studio-950 border border-slate-800 rounded-xl py-1.5 px-3 text-[11px] text-white"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleAddGalleryUrl}
+                    disabled={!newGalleryUrl.trim()}
+                    className="w-full sm:w-auto px-3 py-1.5 rounded-xl bg-studio-800 hover:bg-studio-700 text-slate-200 text-[11px] font-medium disabled:opacity-40 transition-colors shrink-0 flex items-center justify-center gap-1"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>افزودن لینک</span>
+                  </button>
+
+                  <label className="w-full sm:w-auto px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 text-indigo-300 text-[11px] font-medium cursor-pointer transition-colors shrink-0 flex items-center justify-center gap-1.5">
+                    {uploadingGalleryImg ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      <Upload className="w-3.5 h-3.5" />
+                    )}
+                    <span>آپلود فایل جدید</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      disabled={uploadingGalleryImg}
+                      onChange={handleUploadGalleryImage}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+              </div>
 
               <div>
                 <label className="block text-slate-300 font-medium mb-1">خلاصه داستان / معرفی کوتاه *</label>
