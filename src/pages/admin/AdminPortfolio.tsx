@@ -434,6 +434,30 @@ export const AdminPortfolio: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-slate-300 font-medium mb-1">سال تولید / ساخت</label>
+                  <input
+                    type="text"
+                    value={formData.year}
+                    onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                    placeholder="۱۴۰۳ یا ۲۰۲۶"
+                    className="w-full bg-studio-950 border border-slate-800 rounded-xl p-2.5 text-white"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-slate-300 font-medium mb-1">مدت زمان تیزر / پروژه</label>
+                  <input
+                    type="text"
+                    value={formData.duration}
+                    onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+                    placeholder="۱۹ ثانیه (ریلز عمودی) یا سفارشی"
+                    className="w-full bg-studio-950 border border-slate-800 rounded-xl p-2.5 text-white"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <FileUpload
                   label="تصویر کاور پروژه *"
                   value={formData.coverImage}
