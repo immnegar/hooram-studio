@@ -553,8 +553,12 @@ app.get('/robots.txt', (req, res) => {
   const robots = `User-agent: *
 Allow: /
 Disallow: /admin
-Disallow: /api/admin
 Disallow: /admin/*
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /favicon*
+Allow: /images/*
 
 Sitemap: ${baseUrl}/sitemap.xml
 `;
