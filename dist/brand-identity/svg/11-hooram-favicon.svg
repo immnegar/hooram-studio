@@ -1,0 +1,12 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <rect width="512" height="512" fill="#07090E" />
+  
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Two optically balanced monolithic arcs forming an infinite circle separated by a light corridor -->
+  <path d="M 256 40 C 375.3 40, 472 136.7, 472 256 C 472 311.5 451.2 362.2 417 401 L 344 328 C 358.8 307.2 367.5 282.6 367.5 256 C 367.5 194.4 317.6 144.5 256 144.5 C 229.4 144.5 204.8 153.2 184 168 L 111 95 C 149.8 60.8 200.5 40 256 40 Z" fill="#6366F1" />
+  <path d="M 256 472 C 136.7 472, 40 375.3, 40 256 C 40 200.5 60.8 149.8 95 111 L 168 184 C 153.2 204.8 144.5 229.4 144.5 256 C 144.5 317.6 194.4 367.5 256 367.5 C 282.6 367.5 307.2 358.8 328 344 L 401 417 C 362.2 451.2 311.5 472 256 472 Z" fill="#6366F1" />
+  <!-- Central optical light core -->
+  <circle cx="256" cy="256" r="30" fill="#6366F1" />
+</svg>
+</svg>

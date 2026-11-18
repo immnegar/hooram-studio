@@ -1,0 +1,14 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Left Pillar (Film Division) -->
+  <rect x="76" y="64" width="76" height="384" rx="4" fill="#C5A46D" />
+  <!-- Right Pillar (Digital & Web Division) -->
+  <rect x="360" y="64" width="76" height="384" rx="4" fill="#C5A46D" />
+  <!-- Solar Core / Hoor Horizon (Connecting Bridge) -->
+  <!-- Top Half of Sun -->
+  <path d="M 182 242 L 330 242 C 324.5 174.5, 295 120, 256 120 C 217 120, 187.5 174.5, 182 242 Z" fill="#C5A46D" />
+  <!-- Bottom Half of Sun -->
+  <path d="M 182 270 L 330 270 C 324.5 337.5, 295 392, 256 392 C 217 392, 187.5 337.5, 182 270 Z" fill="#C5A46D" />
+  <!-- Center Horizontal Bridge Beam -->
+  <rect x="152" y="246" width="208" height="20" fill="#C5A46D" />
+</svg>

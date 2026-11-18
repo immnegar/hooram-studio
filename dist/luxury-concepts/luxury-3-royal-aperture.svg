@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="champagne_gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8E7" />
+      <stop offset="35%" stop-color="#EED7A1" />
+      <stop offset="70%" stop-color="#C5A059" />
+      <stop offset="100%" stop-color="#8E6A2B" />
+    </linearGradient>
+    <linearGradient id="rim_gold" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8E7" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#C5A059" stop-opacity="0.2" />
+    </linearGradient>
+  </defs>
+
+  <!-- Deep Obsidian Velvet Background -->
+  <rect width="512" height="512" fill="#04060A" />
+
+  <g transform="translate(256, 256)">
+    <!-- Outer Precision Bezel -->
+    <circle cx="0" cy="0" r="216" fill="none" stroke="url(#rim_gold)" stroke-width="3" />
+    <circle cx="0" cy="0" r="202" fill="none" stroke="rgba(197, 160, 89, 0.2)" stroke-width="1" />
+
+    <!-- 12 Precision Hour / Shutter Angle Ticks -->
+    <line x1="0" y1="-216" x2="0" y2="-198" stroke="url(#champagne_gold)" stroke-width="2" />
+    <line x1="0" y1="216" x2="0" y2="198" stroke="url(#champagne_gold)" stroke-width="2" />
+    <line x1="-216" y1="0" x2="-198" y2="0" stroke="url(#champagne_gold)" stroke-width="2" />
+    <line x1="216" y1="0" x2="198" y2="0" stroke="url(#champagne_gold)" stroke-width="2" />
+
+    <line x1="-152.7" y1="-152.7" x2="-140" y2="-140" stroke="rgba(197, 160, 89, 0.5)" stroke-width="1.5" />
+    <line x1="152.7" y1="-152.7" x2="140" y2="-140" stroke="rgba(197, 160, 89, 0.5)" stroke-width="1.5" />
+    <line x1="-152.7" y1="152.7" x2="-140" y2="140" stroke="rgba(197, 160, 89, 0.5)" stroke-width="1.5" />
+    <line x1="152.7" y1="152.7" x2="140" y2="140" stroke="rgba(197, 160, 89, 0.5)" stroke-width="1.5" />
+
+    <!-- Center Chiseled Monogram H (Pure Swiss Cinema Luxury) -->
+    <!-- Left Vertical -->
+    <path d="M -90 -124 L -50 -124 L -50 124 L -90 124 Z" fill="url(#champagne_gold)" />
+    <!-- Right Vertical -->
+    <path d="M 50 -124 L 90 -124 L 90 124 L 50 124 Z" fill="url(#champagne_gold)" />
+    <!-- Center Horizontal Bar with Lens Opening -->
+    <path d="M -50 -14 L -18 -14 L -18 14 L -50 14 Z" fill="url(#champagne_gold)" />
+    <path d="M 18 -14 L 50 -14 L 50 14 L 18 14 Z" fill="url(#champagne_gold)" />
+
+    <!-- Center Floating Precision Aperture Dot -->
+    <circle cx="0" cy="0" r="10" fill="none" stroke="url(#champagne_gold)" stroke-width="2.5" />
+    <circle cx="0" cy="0" r="4" fill="#FFF8E7" />
+  </g>
+</svg>

@@ -8,7 +8,11 @@ node_modules/
 # ==========================================
 # 2. Production & Build Outputs
 # ==========================================
-dist/
+# dist is tracked so low-RAM VPS does not need to run heavy vite build
+dist/videos/*
+dist/uploads/*.mp4
+dist/uploads/*.mov
+dist/uploads/*.webm
 dist-ssr/
 build/
 *.local

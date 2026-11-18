@@ -1,0 +1,6 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Continuous geometric loop with precision 45-degree facets -->
+  <path d="M 148 84 L 224 84 L 224 216 L 288 216 L 288 84 L 364 84 L 364 276 C 364 366, 298 428, 208 428 C 118 428, 64 364, 64 284 L 140 284 C 140 324, 168 356, 208 356 C 248 356, 288 322, 288 276 L 288 284 L 224 284 L 224 428 L 148 428 L 148 84 Z" fill="#C5A46D" />
+  <circle cx="364" cy="356" r="32" fill="#C5A46D" />
+</svg>

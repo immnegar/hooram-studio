@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /favicon*
+Allow: /images/*
+
+Sitemap: https://hooramstudio.ir/sitemap.xml
+

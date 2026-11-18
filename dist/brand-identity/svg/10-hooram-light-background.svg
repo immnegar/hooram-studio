@@ -1,0 +1,37 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 220" width="100%" height="100%">
+  <rect width="1020" height="220" fill="#FFFFFF" />
+  <!-- Symbol -->
+  <g transform="translate(30, 20) scale(0.3515625)">
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Two optically balanced monolithic arcs forming an infinite circle separated by a light corridor -->
+  <path d="M 256 40 C 375.3 40, 472 136.7, 472 256 C 472 311.5 451.2 362.2 417 401 L 344 328 C 358.8 307.2 367.5 282.6 367.5 256 C 367.5 194.4 317.6 144.5 256 144.5 C 229.4 144.5 204.8 153.2 184 168 L 111 95 C 149.8 60.8 200.5 40 256 40 Z" fill="#6366F1" />
+  <path d="M 256 472 C 136.7 472, 40 375.3, 40 256 C 40 200.5 60.8 149.8 95 111 L 168 184 C 153.2 204.8 144.5 229.4 144.5 256 C 144.5 317.6 194.4 367.5 256 367.5 C 282.6 367.5 307.2 358.8 328 344 L 401 417 C 362.2 451.2 311.5 472 256 472 Z" fill="#6366F1" />
+  <!-- Central optical light core -->
+  <circle cx="256" cy="256" r="30" fill="#6366F1" />
+</svg>
+  </g>
+  <!-- Wordmark HOORAM -->
+  <g transform="translate(250, 46)">
+    
+<g fill="#07090E">
+  <!-- H -->
+  <path d="M 0 0 L 15 0 L 15 39 L 51 39 L 51 0 L 66 0 L 66 96 L 51 96 L 51 55 L 15 55 L 15 96 L 0 96 Z" />
+  <!-- O (First O) -->
+  <path d="M 148 0 C 120 0, 96 22, 96 48 C 96 74, 120 96, 148 96 C 176 96, 200 74, 200 48 C 200 22, 176 0, 148 0 Z M 148 16 C 168 16, 184 30, 184 48 C 184 66, 168 80, 148 80 C 128 80, 112 66, 112 48 C 112 30, 128 16, 148 16 Z" />
+  <!-- O (Second O - Exactly identical geometry & optical spacing) -->
+  <path d="M 260 0 C 232 0, 208 22, 208 48 C 208 74, 232 96, 260 96 C 288 96, 312 74, 312 48 C 312 22, 288 0, 260 0 Z M 260 16 C 280 16, 296 30, 296 48 C 296 66, 280 80, 260 80 C 240 80, 224 66, 224 48 C 224 30, 240 16, 260 16 Z" />
+  <!-- R -->
+  <path d="M 342 0 L 388 0 C 408 0, 424 12, 424 32 C 424 46, 414 57, 400 61 L 430 96 L 409 96 L 382 64 L 358 64 L 358 96 L 342 96 Z M 358 15 L 358 50 L 386 50 C 398 50, 407 43, 407 32.5 C 407 22, 398 15, 386 15 Z" />
+  <!-- A -->
+  <path d="M 480 0 L 498 0 L 534 96 L 516 96 L 507 72 L 471 72 L 462 96 L 444 96 Z M 477 58 L 501 58 L 489 23 Z" />
+  <!-- M -->
+  <path d="M 558 0 L 577 0 L 600 62 L 623 0 L 642 0 L 642 96 L 626 96 L 626 28 L 607 80 L 593 80 L 574 28 L 574 96 L 558 96 Z" />
+</g>
+    
+<text x="321" y="142" font-family="'Inter', sans-serif" font-size="15" letter-spacing="9" fill="#6366F1" text-anchor="middle" font-weight="600">
+  CREATIVE STUDIO
+</text>
+  </g>
+</svg>
