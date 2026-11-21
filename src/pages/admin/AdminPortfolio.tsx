@@ -22,6 +22,12 @@ import { PortfolioItem } from '../../types';
 import { Button } from '../../components/ui/Button';
 import { FileUpload } from '../../components/ui/FileUpload';
 
+// Helper to convert English digits to Persian digits on the fly
+const toPersianDigits = (str: string): string => {
+  const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  return (str || '').replace(/[0-9]/g, (w) => farsiDigits[+w]);
+};
+
 export const AdminPortfolio: React.FC = () => {
   const [projects, setProjects] = useState<PortfolioItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -273,8 +279,8 @@ export const AdminPortfolio: React.FC = () => {
       gallery: Array.isArray(p.gallery) ? p.gallery : (p.coverImage ? [p.coverImage] : []),
       videoPreviewUrl: p.videoPreviewUrl || '',
       client: p.client,
-      year: p.year || '۱۴۰۳',
-      duration: p.duration || '',
+      year: toPersianDigits(p.year || '۱۴۰۳'),
+      duration: p.duration ? toPersianDigits(p.duration) : '',
       summary: p.summary,
       challenge: p.challenge || '',
       solution: p.solution || '',
@@ -521,9 +527,9 @@ export const AdminPortfolio: React.FC = () => {
                   <input
                     type="text"
                     value={formData.year}
-                    onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, year: toPersianDigits(e.target.value) })}
                     placeholder="۱۴۰۳ یا ۲۰۲۶"
-                    className="w-full bg-studio-950 border border-slate-800 rounded-xl p-2.5 text-white"
+                    className="w-full bg-studio-950 border border-slate-800 rounded-xl p-2.5 text-white font-vazir text-right"
                   />
                 </div>
 
@@ -532,9 +538,9 @@ export const AdminPortfolio: React.FC = () => {
                   <input
                     type="text"
                     value={formData.duration}
-                    onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, duration: toPersianDigits(e.target.value) })}
                     placeholder="۱۹ ثانیه (ریلز عمودی) یا سفارشی"
-                    className="w-full bg-studio-950 border border-slate-800 rounded-xl p-2.5 text-white"
+                    className="w-full bg-studio-950 border border-slate-800 rounded-xl p-2.5 text-white font-vazir text-right"
                   />
                 </div>
               </div>
