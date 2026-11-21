@@ -52,43 +52,43 @@ pSite.deliverables = [
 pSite.toolsUsed = ['Figma', 'React', 'TypeScript', 'Tailwind CSS', 'Vite'];
 pSite.updatedAt = new Date().toISOString();
 
-// 2. Add / Update Medical Surgical Commercial (InShot Video)
-let pMed = db.portfolio.find(p => p.id === 'port_medical_clinic');
-if (!pMed) {
-  pMed = { id: 'port_medical_clinic' };
-  db.portfolio.unshift(pMed);
+// 2. Add / Update Viral Coffee Commercial (InShot Video)
+let pCoffee = db.portfolio.find(p => p.id === 'port_medical_clinic');
+if (!pCoffee) {
+  pCoffee = { id: 'port_medical_clinic' };
+  db.portfolio.unshift(pCoffee);
 }
-pMed.slug = 'advanced-surgical-center-commercial';
-pMed.title = 'تیزر تبلیغاتی مرکز جراحی و کلینیک فوق‌تخصصی';
-pMed.englishTitle = 'Advanced Surgical Center & Specialist Medical Clinic Commercial';
-pMed.category = 'فیلم‌های تبلیغاتی';
-pMed.categoryFa = 'فیلم‌های تبلیغاتی';
-pMed.coverImage = '/uploads/medical_clinic_cover.jpg';
-pMed.gallery = [
+pCoffee.slug = 'coffee-stronger-than-anesthesia-commercial';
+pCoffee.title = 'تیزر تبلیغاتی خلاقانه قهوه؛ قوی‌تر از داروی بیهوشی!';
+pCoffee.englishTitle = 'Viral Coffee Commercial — Stronger Than Anesthesia';
+pCoffee.category = 'کمپین‌های خلاقانه';
+pCoffee.categoryFa = 'کمپین‌های خلاقانه';
+pCoffee.coverImage = '/uploads/medical_clinic_cover.jpg';
+pCoffee.gallery = [
   '/uploads/medical_clinic_cover.jpg',
   '/uploads/medical_clinic_gallery_1.jpg',
   '/uploads/medical_clinic_gallery_2.jpg',
   '/uploads/medical_clinic_gallery_3.jpg',
   '/uploads/medical_clinic_gallery_4.jpg'
 ];
-pMed.videoPreviewUrl = '/videos/portfolio/medical-clinic-commercial.mp4';
-pMed.client = 'مرکز جراحی و کلینیک فوق‌تخصصی (کانسپت استودیو)';
-pMed.year = '۱۴۰۳';
-pMed.duration = '۴۵ ثانیه (ریلز عمودی)';
-pMed.isConcept = true;
-pMed.featured = true;
-pMed.summary = 'روایتی سینمایی و عمیقاً انسانی از اتاق عمل یک مرکز جراحی فوق‌تخصصی؛ از آمادگی تیم جراحی و آرامش قبل از عمل تا بازیابی سلامتی، لبخند رضایت بیمار و نگاهی سرشار از امید به آینده.';
-pMed.challenge = 'ایجاد اعتماد، حس آرامش و امنیت روانی برای بیمارانی که با استرس و نگرانی مواجه هستند؛ بازآفرینی فضای واقعی و استریل اتاق عمل با تجهیزات مدرن پزشکی و نورپردازی حرفه‌ای سینمایی بدون نیاز به هماهنگی‌های پیچیده و پرهزینه فیلمبرداری در محیط‌های بیمارستانی فعال.';
-pMed.solution = 'کارگردانی هنری واقع‌گرایانه با پالت رنگی آبی کبالت و سبز استریل، فوکوس ماکرو و احساسی بر قرنیه و نگاه بیمار، و بازسازی دقیق تیم جراحی و تجهیزات پایش علائم حیاتی. تمام پلان‌ها با جدیدترین ابزارهای هوش مصنوعی و بهینه‌سازی رنگ و صدا در استودیو هورام تولید شده‌اند تا استانداردهای جهانی ویدیوهای پزشکی و کلینیکی را به نمایش بگذارند.';
-pMed.deliverables = [
-  'تیزر سینمایی با کیفیت 4K برای کمپین‌های دیجیتال',
-  'نسخه ریلز و استوری عمودی (۹:۱۶) متناسب با اینستاگرام',
-  'کاور و فریم‌های منتخب با وضوح بالا برای وب‌سایت و بنر'
+pCoffee.videoPreviewUrl = '/videos/portfolio/medical-clinic-commercial.mp4';
+pCoffee.client = 'برند قهوه انرژی‌بخش (کمپین اختصاصی هورام)';
+pCoffee.year = '۱۴۰۳';
+pCoffee.duration = '۴۵ ثانیه (ریلز وایرال)';
+pCoffee.isConcept = true;
+pCoffee.featured = true;
+pCoffee.summary = 'روایتی کمدی، غافلگیرکننده و پرکشش برای نمایش قدرت و کافئین فوق‌العاده قهوه؛ در اتاق عمل، ماسک گاز بیهوشی روی صورت بیمار قرار می‌گیرد اما قهوه‌ای که نوشیده به قدری بیدارکننده و سرحال است که اثر داروی بیهوشی خنثی شده و بیمار با نشاط کامل تیم جراحی را مبهوت می‌سازد!';
+pCoffee.challenge = 'عبور از کلیشه‌های فرسوده تبلیغات قهوه (مانند بخار ملایم فنجان یا صبح‌های پاییزی) و خلق یک سناریوی ویروسی و پربازدید در شبکه‌های اجتماعی که بتواند پیام «اوج تمرکز، انرژی و بی‌خوابی خوشایند» را با طنزی ماندگار در ذهن مخاطب ثبت کند.';
+pCoffee.solution = 'کارگردانی تضاد موقعیت: قرار دادن فضای فوق‌العاده جدی و استریل اتاق عمل در برابر انرژی مهارنشدنی بیمار. هدایت میمیک چهره، نگاه کاملاً هشیار، لبخند سرحال پس از استنشاق گاز و نگاه شگفت‌زده جراح؛ تمامی این سکانس‌ها با ابزارهای پیشرفته هوش مصنوعی و طراحی صدای پرتعلیق، بدون نیاز به اجاره لوکیشن‌های گران‌قیمت در استودیو هورام خلق شدند.';
+pCoffee.deliverables = [
+  'تیزر ویدیویی عمودی (۹:۱۶) بهینه‌شده برای اکسپلور و ریلز اینستاگرام',
+  'نسخه باکیفیت 4K برای یوتیوب شورتس و تیک‌تاک',
+  'پک فریم‌های منتخب و کاور با نرخ کلیک (CTR) بالا'
 ];
-pMed.toolsUsed = ['Midjourney v6', 'Runway Gen-3', 'Adobe Premiere & After Effects', 'Sound Design Suite'];
-pMed.updatedAt = new Date().toISOString();
+pCoffee.toolsUsed = ['Midjourney v6', 'Runway Gen-3', 'Adobe Premiere & After Effects', 'Sound Design Suite'];
+pCoffee.updatedAt = new Date().toISOString();
 
 fs.writeFileSync(dbPath, JSON.stringify(db, null, 2), 'utf8');
 console.log('✅ Portfolio successfully updated in db.json!');
 console.log('- Glow Beauty website updated:', pSite.title);
-console.log('- Medical clinic commercial added:', pMed.title);
+console.log('- Viral Coffee Commercial updated:', pCoffee.title);
